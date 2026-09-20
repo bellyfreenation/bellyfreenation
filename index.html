@@ -186,6 +186,31 @@
     .pay-button:hover {
         background: #26764a;
     }
+    .app-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+    }
+    .app-buttons a {
+        flex: 1;
+        min-width: 140px;
+        font-size: 15px;
+        padding: 13px;
+        margin-top: 0;
+    }
+    .phonepe-btn {
+        background: #5f259f !important;
+    }
+    .phonepe-btn:hover {
+        background: #4a1d7a !important;
+    }
+    .gpay-btn {
+        background: #4285f4 !important;
+    }
+    .gpay-btn:hover {
+        background: #3367d6 !important;
+    }
     .payment-note {
         margin-top: 15px !important;
         color: #555 !important;
@@ -270,6 +295,7 @@
             <p>Invoice #BFN-001</p>
         </div>
     </div>
+
     <!-- CLIENT & BILLING DETAILS -->
     <div class="details">
         <div>
@@ -291,6 +317,7 @@
             </div>
         </div>
     </div>
+
     <!-- SERVICE -->
     <div class="service-section">
         <div class="service-title">
@@ -302,6 +329,7 @@
         <div class="service-description">
             Freshly prepared meals tailored to your plan.
         </div>
+
         <!-- INCLUDED BENEFITS -->
         <div class="included-box">
             <div class="included-title">
@@ -317,6 +345,7 @@
             </div>
         </div>
     </div>
+
     <!-- SUMMARY -->
     <div class="summary">
         <div class="summary-row">
@@ -328,6 +357,7 @@
             <span>₹12,858</span>
         </div>
     </div>
+
     <!-- PAYMENT -->
     <div class="payment-box">
         <h3>Payment</h3>
@@ -337,16 +367,31 @@
         <p class="upi-id">
             UPI ID: 6309075979-2@ybl
         </p>
-        <a
-            class="pay-button"
-            href="upi://pay?pa=6309075979-2%40ybl&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
-            PAY ₹12,858
+
+        <!-- Main button (best for Android) -->
+        <a class="pay-button"
+           href="upi://pay?pa=6309075979-2%40ybl&pn=Belly%20Free%20Nation&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
+            PAY ₹12,858 (Any UPI App)
         </a>
+
+        <!-- Extra buttons for iPhone -->
+        <div class="app-buttons">
+            <a class="pay-button phonepe-btn"
+               href="phonepe://pay?pa=6309075979-2%40ybl&pn=Belly%20Free%20Nation&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
+                Open PhonePe
+            </a>
+            <a class="pay-button gpay-btn"
+               href="tez://upi/pay?pa=6309075979-2%40ybl&pn=Belly%20Free%20Nation&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
+                Open Google Pay
+            </a>
+        </div>
+
         <p class="payment-note">
             Once payment is completed, please send the screenshot to
             <strong>9391734732</strong>.
         </p>
     </div>
+
     <!-- CLOSING MESSAGE -->
     <div class="closing">
         <p class="closing-message">
@@ -355,6 +400,7 @@
             KEEP GOING.
         </p>
     </div>
+
     <!-- FOOTER -->
     <div class="footer">
         <strong>

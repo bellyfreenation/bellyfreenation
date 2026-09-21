@@ -5,11 +5,9 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Belly Free Nation | Invoice Generator</title>
-
 
 <style>
 
@@ -17,337 +15,191 @@
     box-sizing: border-box;
 }
 
-
 body {
-
     margin: 0;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     background: #f3f5f1;
-
     color: #252525;
 }
 
-
 .container {
-
     max-width: 600px;
-
     margin: 40px auto;
-
     padding: 20px;
 }
 
-
 .box {
-
     background: #ffffff;
-
     border-radius: 14px;
-
     padding: 35px;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
 
-
 h1 {
-
     margin: 0;
-
     color: #174A35;
-
     font-size: 26px;
-
     letter-spacing: 0.5px;
 }
 
-
 .subtitle {
-
     margin-top: 8px;
-
     margin-bottom: 30px;
-
     color: #777;
-
     font-size: 14px;
 }
 
-
 label {
-
     display: block;
-
     margin-top: 18px;
-
     margin-bottom: 7px;
-
     font-size: 12px;
-
     color: #666;
-
     font-weight: bold;
-
     text-transform: uppercase;
-
     letter-spacing: 0.5px;
 }
 
-
 input {
-
     width: 100%;
-
     padding: 13px 14px;
-
-    border:
-        1px solid #d5d5d5;
-
+    border: 1px solid #d5d5d5;
     border-radius: 8px;
-
     font-size: 15px;
-
     outline: none;
 }
 
-
 input:focus {
-
     border-color: #174A35;
 }
 
-
 button {
-
     font-family: inherit;
-
     cursor: pointer;
 }
 
-
 .generate-button {
-
     width: 100%;
-
     margin-top: 28px;
-
     padding: 15px;
-
     background: #174A35;
-
     color: #ffffff;
-
     border: none;
-
     border-radius: 8px;
-
     font-size: 15px;
-
     font-weight: bold;
 }
 
-
 .generate-button:hover {
-
     background: #0f3928;
 }
 
-
 .result {
-
     display: none;
-
     margin-top: 30px;
-
     padding: 20px;
-
     background: #f5f8f4;
-
-    border:
-        1px solid #dfe8df;
-
+    border: 1px solid #dfe8df;
     border-radius: 10px;
 }
 
-
 .result-title {
-
     color: #174A35;
-
     font-weight: bold;
-
     margin-bottom: 12px;
 }
 
-
 .link-input {
-
     background: #ffffff;
-
     font-size: 12px;
-
     margin-bottom: 10px;
 }
 
-
 .action-button {
-
     width: 100%;
-
     padding: 13px;
-
     margin-top: 10px;
-
     border-radius: 8px;
-
     font-size: 14px;
-
     font-weight: bold;
 }
 
-
 .copy-button {
-
     background: #174A35;
-
     color: #ffffff;
-
     border: none;
 }
 
-
 .shorten-button {
-
     background: #ffffff;
-
     color: #174A35;
-
-    border:
-        1px solid #174A35;
+    border: 1px solid #174A35;
 }
 
-
 .open-button {
-
     display: block;
-
     width: 100%;
-
     margin-top: 10px;
-
     padding: 13px;
-
     background: #ffffff;
-
     color: #174A35;
-
-    border:
-        1px solid #174A35;
-
+    border: 1px solid #174A35;
     border-radius: 8px;
-
     font-size: 14px;
-
     font-weight: bold;
-
     text-align: center;
-
     text-decoration: none;
 }
 
-
 .whatsapp-button {
-
     background: #25D366;
-
     color: #ffffff;
-
     border: none;
 }
 
-
 .success {
-
     display: none;
-
     margin-top: 12px;
-
     color: #174A35;
-
     font-size: 13px;
-
     font-weight: bold;
 }
 
-
 .preview {
-
     display: none;
-
     margin-top: 20px;
-
     padding: 15px;
-
     background: #ffffff;
-
-    border:
-        1px solid #e5e5e5;
-
+    border: 1px solid #e5e5e5;
     border-radius: 8px;
-
     font-size: 14px;
-
     line-height: 1.8;
 }
 
-
 .preview strong {
-
     color: #174A35;
 }
 
-
 .instructions {
-
     margin-top: 20px;
-
     padding: 15px;
-
     background: #fffaf0;
-
-    border:
-        1px solid #eee1c5;
-
+    border: 1px solid #eee1c5;
     border-radius: 8px;
-
     color: #665a43;
-
     font-size: 13px;
-
     line-height: 1.6;
 }
-
 
 @media (max-width: 600px) {
 
     .container {
-
         margin: 15px auto;
-
         padding: 10px;
     }
 
-
     .box {
-
-        padding:
-            25px 20px;
+        padding: 25px 20px;
     }
 
 }
@@ -356,20 +208,15 @@ button {
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
-
 <div class="box">
-
 
 <h1>
 BELLY FREE NATION
 </h1>
-
 
 <div class="subtitle">
 Invoice Generator
@@ -458,56 +305,39 @@ Invoice Date
     class="preview"
     id="preview">
 
-
     <strong>
         Invoice Preview
     </strong>
 
-
     <br>
-
 
     Customer:
 
-    <span id="previewName">
-    </span>
-
+    <span id="previewName"></span>
 
     <br>
-
 
     Invoice:
 
-    <span id="previewInvoice">
-    </span>
-
+    <span id="previewInvoice"></span>
 
     <br>
-
 
     Amount:
 
-    ₹<span id="previewAmount">
-    </span>
-
+    ₹<span id="previewAmount"></span>
 
     <br>
-
 
     Period:
 
-    <span id="previewPeriod">
-    </span>
-
+    <span id="previewPeriod"></span>
 
     <br>
 
-
     Date:
 
-    <span id="previewDate">
-    </span>
-
+    <span id="previewDate"></span>
 
 </div>
 
@@ -518,19 +348,16 @@ Invoice Date
     class="result"
     id="result">
 
-
     <div class="result-title">
-
         Customer Invoice Link
-
     </div>
-
 
     <input
         type="text"
         id="generatedLink"
         class="link-input"
-        readonly>
+        readonly
+    >
 
 
     <!-- COPY -->
@@ -603,44 +430,29 @@ Invoice Date
 
         Paste it into TinyURL and create your short link.
 
-        <br><br>
-
-        You can then send the short link to your customer.
-
     </div>
 
+</div>
 
 </div>
 
-
 </div>
-
-
-</div>
-
 
 
 <script>
 
 
-/*
-============================================================
-PROPER CASE FOR CUSTOMER NAME
-============================================================
-*/
+/* =========================================================
+   FORMAT CUSTOMER NAME
+   ========================================================= */
 
 function formatName(name) {
 
     return name
-
         .trim()
-
         .replace(/\s+/g, " ")
-
         .toLowerCase()
-
         .split(" ")
-
         .map(function(word) {
 
             if (!word) {
@@ -651,17 +463,14 @@ function formatName(name) {
                 + word.slice(1);
 
         })
-
         .join(" ");
 
 }
 
 
-/*
-============================================================
-FORMAT MONTH
-============================================================
-*/
+/* =========================================================
+   FORMAT MONTH
+   ========================================================= */
 
 function formatMonth(month) {
 
@@ -705,23 +514,19 @@ function formatMonth(month) {
 
     };
 
-
     const key =
         month
         .trim()
         .toLowerCase();
-
 
     return months[key] || month;
 
 }
 
 
-/*
-============================================================
-FORMAT ONE DATE
-============================================================
-*/
+/* =========================================================
+   FORMAT ONE DATE
+   ========================================================= */
 
 function formatDate(dateText) {
 
@@ -730,22 +535,17 @@ function formatDate(dateText) {
         .trim()
         .replace(/\s+/g, " ");
 
-
-    /*
-    Replace / with -
-    */
-
     text =
         text.replace(/\//g, "-");
 
 
     /*
-    Try to find:
+       Example:
 
-    Oct 1
-    OCT 1
-    October 1
-    Oct 1, 2026
+       oct 1
+       OCT 1
+       October 1
+       Oct 1, 2026
     */
 
     let match =
@@ -782,21 +582,14 @@ function formatDate(dateText) {
     }
 
 
-    /*
-    If date is not recognized,
-    clean spaces and return it.
-    */
-
     return text;
 
 }
 
 
-/*
-============================================================
-FORMAT BILLING PERIOD
-============================================================
-*/
+/* =========================================================
+   FORMAT BILLING PERIOD
+   ========================================================= */
 
 function formatPeriod(periodText) {
 
@@ -807,42 +600,35 @@ function formatPeriod(periodText) {
 
 
     /*
-    Replace different dash styles
+       Convert different dash styles
+       into normal -
     */
 
     text =
         text.replace(/[–—]/g, "-");
 
 
-    /*
-    Split around -
-    */
-
     const parts =
         text.split("-");
 
 
     /*
-    If there is no range,
-    format as one date.
+       If only one date was entered
     */
 
     if (parts.length === 1) {
 
-        return formatDate(
-            parts[0]
-        );
+        return formatDate(parts[0]);
 
     }
 
 
     /*
-    Get start and end
+       Start and end dates
     */
 
     let start =
         parts[0].trim();
-
 
     let end =
         parts.slice(1)
@@ -851,7 +637,7 @@ function formatPeriod(periodText) {
 
 
     /*
-    Look for year anywhere
+       Find year
     */
 
     const yearMatch =
@@ -861,12 +647,11 @@ function formatPeriod(periodText) {
     const year =
         yearMatch
         ? yearMatch[1]
-        : "";
+        : new Date().getFullYear();
 
 
     /*
-    Remove year from both sides
-    temporarily.
+       Remove year temporarily
     */
 
     start =
@@ -884,49 +669,24 @@ function formatPeriod(periodText) {
 
 
     /*
-    Format dates
+       Format both dates
     */
 
     let formattedStart =
         formatDate(start);
-
 
     let formattedEnd =
         formatDate(end);
 
 
     /*
-    Add year to END if supplied
+       Add year to END
     */
 
-    if (year) {
-
-        formattedEnd =
-            formattedEnd +
-            ", " +
-            year;
-
-    }
-
-
-    /*
-    If there is no year,
-    use current year.
-    */
-
-    else {
-
-        const currentYear =
-            new Date()
-            .getFullYear();
-
-
-        formattedEnd =
-            formattedEnd +
-            ", " +
-            currentYear;
-
-    }
+    formattedEnd =
+        formattedEnd +
+        ", " +
+        year;
 
 
     return (
@@ -938,11 +698,9 @@ function formatPeriod(periodText) {
 }
 
 
-/*
-============================================================
-FORMAT AMOUNT
-============================================================
-*/
+/* =========================================================
+   FORMAT AMOUNT
+   ========================================================= */
 
 function formatAmount(amount) {
 
@@ -970,17 +728,15 @@ function formatAmount(amount) {
 }
 
 
-/*
-============================================================
-GENERATE INVOICE
-============================================================
-*/
+/* =========================================================
+   GENERATE INVOICE LINK
+   ========================================================= */
 
 function generateInvoice() {
 
 
     /*
-    GET RAW VALUES
+       Get values
     */
 
     const rawName =
@@ -1014,7 +770,7 @@ function generateInvoice() {
 
 
     /*
-    CHECK
+       Check fields
     */
 
     if (
@@ -1035,7 +791,7 @@ function generateInvoice() {
 
 
     /*
-    STANDARDIZE
+       Standardize values
     */
 
     const name =
@@ -1057,19 +813,15 @@ function generateInvoice() {
 
 
     const period =
-        formatPeriod(
-            rawPeriod
-        );
+        formatPeriod(rawPeriod);
 
 
     const date =
-        formatDate(
-            rawDate
-        );
+        formatDate(rawDate);
 
 
     /*
-    CREATE DATA
+       Create invoice data
     */
 
     const invoiceData = {
@@ -1088,7 +840,7 @@ function generateInvoice() {
 
 
     /*
-    JSON
+       Convert to JSON
     */
 
     const json =
@@ -1098,7 +850,7 @@ function generateInvoice() {
 
 
     /*
-    ENCODE
+       Encode invoice data
     */
 
     const encoded =
@@ -1110,7 +862,13 @@ function generateInvoice() {
 
 
     /*
-    CUSTOMER LINK
+       IMPORTANT:
+
+       This creates the link to
+       customer-invoice.html
+
+       It does NOT change your
+       customer-invoice.html file.
     */
 
     const customerLink =
@@ -1125,125 +883,97 @@ function generateInvoice() {
 
 
     /*
-    PREVIEW
+       Show standardized preview
     */
 
     document
-    .getElementById(
-        "previewName"
-    )
+    .getElementById("previewName")
     .textContent =
         name;
 
 
     document
-    .getElementById(
-        "previewInvoice"
-    )
+    .getElementById("previewInvoice")
     .textContent =
         invoice;
 
 
     document
-    .getElementById(
-        "previewAmount"
-    )
+    .getElementById("previewAmount")
     .textContent =
         formatAmount(amount);
 
 
     document
-    .getElementById(
-        "previewPeriod"
-    )
+    .getElementById("previewPeriod")
     .textContent =
         period;
 
 
     document
-    .getElementById(
-        "previewDate"
-    )
+    .getElementById("previewDate")
     .textContent =
         date;
 
 
-    /*
-    SHOW PREVIEW
-    */
-
     document
-    .getElementById(
-        "preview"
-    )
+    .getElementById("preview")
     .style.display =
         "block";
 
 
     /*
-    SHOW LINK
+       Put generated link
+       into link box
     */
 
     document
-    .getElementById(
-        "generatedLink"
-    )
+    .getElementById("generatedLink")
     .value =
         customerLink;
 
 
     /*
-    OPEN BUTTON
+       Set OPEN INVOICE button
     */
 
     document
-    .getElementById(
-        "openInvoice"
-    )
+    .getElementById("openInvoice")
     .href =
         customerLink;
 
 
     /*
-    SHOW RESULT
+       Show result area
     */
 
     document
-    .getElementById(
-        "result"
-    )
+    .getElementById("result")
     .style.display =
         "block";
 
 
     /*
-    RESET SUCCESS
+       Hide old success message
     */
 
     document
-    .getElementById(
-        "success"
-    )
+    .getElementById("success")
     .style.display =
         "none";
 
 }
 
 
-/*
-============================================================
-COPY LINK
-============================================================
-*/
+/* =========================================================
+   COPY LINK
+   ========================================================= */
 
 function copyLink() {
 
-
     const link =
         document
-        .getElementById(
-            "generatedLink"
-        );
+        .getElementById("generatedLink");
 
 
     link.focus();
@@ -1258,15 +988,11 @@ function copyLink() {
 
     try {
 
-        document.execCommand(
-            "copy"
-        );
+        document.execCommand("copy");
 
 
         document
-        .getElementById(
-            "success"
-        )
+        .getElementById("success")
         .style.display =
             "block";
 
@@ -1282,20 +1008,15 @@ function copyLink() {
 }
 
 
-/*
-============================================================
-TINYURL
-============================================================
-*/
+/* =========================================================
+   OPEN TINYURL
+   ========================================================= */
 
 function shortenLink() {
 
-
     const link =
         document
-        .getElementById(
-            "generatedLink"
-        )
+        .getElementById("generatedLink")
         .value;
 
 
@@ -1311,14 +1032,12 @@ function shortenLink() {
 
 
     /*
-    Automatically copy
+       Copy invoice link automatically
     */
 
     const input =
         document
-        .getElementById(
-            "generatedLink"
-        );
+        .getElementById("generatedLink");
 
 
     input.focus();
@@ -1333,9 +1052,7 @@ function shortenLink() {
 
     try {
 
-        document.execCommand(
-            "copy"
-        );
+        document.execCommand("copy");
 
     } catch (error) {
 
@@ -1343,7 +1060,7 @@ function shortenLink() {
 
 
     /*
-    Open TinyURL
+       Open TinyURL
     */
 
     window.open(
@@ -1354,37 +1071,28 @@ function shortenLink() {
 }
 
 
-/*
-============================================================
-WHATSAPP
-============================================================
-*/
+/* =========================================================
+   SEND ON WHATSAPP
+   ========================================================= */
 
 function sendWhatsApp() {
 
-
     const link =
         document
-        .getElementById(
-            "generatedLink"
-        )
+        .getElementById("generatedLink")
         .value;
 
 
     const name =
         document
-        .getElementById(
-            "customerName"
-        )
+        .getElementById("customerName")
         .value
         .trim();
 
 
     const invoice =
         document
-        .getElementById(
-            "invoiceNumber"
-        )
+        .getElementById("invoiceNumber")
         .value
         .trim()
         .toUpperCase();
@@ -1402,7 +1110,7 @@ function sendWhatsApp() {
 
 
     /*
-    WhatsApp message
+       WhatsApp message
     */
 
     const message =
@@ -1442,7 +1150,6 @@ function sendWhatsApp() {
 }
 
 </script>
-
 
 </body>
 

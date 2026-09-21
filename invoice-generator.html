@@ -4,14 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BFN Invoice Generator</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
       background: #f3f5f1;
       color: #252525;
       padding: 20px;
     }
+
     .container {
       max-width: 520px;
       margin: 0 auto;
@@ -20,17 +27,23 @@
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
       overflow: hidden;
     }
+
     .header {
       background: #174A35;
       color: white;
       padding: 22px;
       text-align: center;
     }
+
     .header h1 {
       font-size: 1.4rem;
       letter-spacing: 1px;
     }
-    .content { padding: 24px; }
+
+    .content {
+      padding: 24px;
+    }
+
     label {
       display: block;
       font-size: 0.9rem;
@@ -38,6 +51,7 @@
       margin-bottom: 6px;
       color: #333;
     }
+
     input[type="text"] {
       width: 100%;
       padding: 12px 14px;
@@ -46,11 +60,13 @@
       font-size: 1rem;
       margin-bottom: 16px;
     }
+
     input[type="text"]:focus {
       outline: none;
       border-color: #174A35;
       box-shadow: 0 0 0 3px rgba(23, 74, 53, 0.15);
     }
+
     .generate-button {
       width: 100%;
       background: #174A35;
@@ -63,7 +79,10 @@
       cursor: pointer;
       margin-top: 8px;
     }
-    .generate-button:hover { background: #0f3324; }
+
+    .generate-button:hover {
+      background: #0f3324;
+    }
 
     .preview-box {
       background: #f6f8f5;
@@ -73,19 +92,26 @@
       margin: 24px 0;
       font-size: 0.95rem;
       display: none;
+      line-height: 1.7;
     }
+
     .preview-box strong {
       display: block;
       margin-bottom: 10px;
       color: #174A35;
     }
 
-    .result-section { display: none; margin-top: 10px; }
+    .result-section {
+      display: none;
+      margin-top: 10px;
+    }
+
     .result-title {
       font-weight: 600;
       margin-bottom: 10px;
       color: #174A35;
     }
+
     .link-input {
       width: 100%;
       padding: 12px;
@@ -96,6 +122,7 @@
       margin-bottom: 12px;
       word-break: break-all;
     }
+
     .action-button {
       width: 100%;
       padding: 12px;
@@ -106,7 +133,16 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .copy-button { background: #10b981; color: white; }
+
+    .copy-button {
+      background: #10b981;
+      color: white;
+    }
+
+    .copy-button:hover {
+      background: #059669;
+    }
+
     .open-button {
       display: block;
       text-align: center;
@@ -118,8 +154,29 @@
       font-weight: 600;
       margin-bottom: 10px;
     }
-    .shorten-button { background: #f59e0b; color: white; }
-    .whatsapp-button { background: #25d366; color: white; }
+
+    .open-button:hover {
+      background: #4f46e5;
+    }
+
+    .shorten-button {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .shorten-button:hover {
+      background: #d97706;
+    }
+
+    .whatsapp-button {
+      background: #25d366;
+      color: white;
+    }
+
+    .whatsapp-button:hover {
+      background: #1ebe5d;
+    }
+
     .success {
       display: none;
       background: #d1fae5;
@@ -130,6 +187,7 @@
       font-weight: 500;
       margin: 12px 0;
     }
+
     .instructions {
       background: #f0f7f2;
       border-left: 4px solid #174A35;
@@ -138,64 +196,148 @@
       font-size: 0.9rem;
       color: #174A35;
       margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .error-message {
+      display: none;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 0.9rem;
     }
   </style>
 </head>
+
 <body>
+
   <div class="container">
+
     <div class="header">
       <h1>BFN Invoice Generator</h1>
     </div>
 
     <div class="content">
+
       <label for="customerName">Customer Name</label>
-      <input type="text" id="customerName" placeholder="e.g. Sushma Reddy">
+      <input
+        type="text"
+        id="customerName"
+        placeholder="e.g. Sushma Reddy"
+      >
 
       <label for="invoiceNumber">Invoice Number</label>
-      <input type="text" id="invoiceNumber" placeholder="e.g. BFN-112">
+      <input
+        type="text"
+        id="invoiceNumber"
+        placeholder="e.g. BFN-112"
+      >
 
       <label for="amount">Amount (₹)</label>
-      <input type="text" id="amount" placeholder="e.g. 5000">
+      <input
+        type="text"
+        id="amount"
+        placeholder="e.g. 5000"
+      >
 
       <label for="billingPeriod">Billing Period</label>
-      <input type="text" id="billingPeriod" placeholder="e.g. Oct 1 - Oct 10, 2026">
+      <input
+        type="text"
+        id="billingPeriod"
+        placeholder="e.g. Oct 1 - Oct 10, 2026"
+      >
 
       <label for="invoiceDate">Invoice Date</label>
-      <input type="text" id="invoiceDate" placeholder="e.g. Oct 1, 2026">
+      <input
+        type="text"
+        id="invoiceDate"
+        placeholder="e.g. Oct 1, 2026"
+      >
 
-      <button type="button" class="generate-button" onclick="generateInvoice()">
+      <button
+        type="button"
+        class="generate-button"
+        onclick="generateInvoice()"
+      >
         GENERATE INVOICE LINK
       </button>
 
+      <!-- Error -->
+      <div class="error-message" id="errorMessage"></div>
+
       <!-- Preview -->
       <div class="preview-box" id="previewBox">
+
         <strong>Invoice Preview</strong>
-        Customer: <span id="previewName"></span><br>
-        Invoice: <span id="previewInvoice"></span><br>
-        Amount: ₹<span id="previewAmount"></span><br>
-        Period: <span id="previewPeriod"></span><br>
-        Date: <span id="previewDate"></span>
+
+        Customer:
+        <span id="previewName"></span>
+        <br>
+
+        Invoice:
+        <span id="previewInvoice"></span>
+        <br>
+
+        Amount:
+        ₹<span id="previewAmount"></span>
+        <br>
+
+        Period:
+        <span id="previewPeriod"></span>
+        <br>
+
+        Date:
+        <span id="previewDate"></span>
+
       </div>
 
       <!-- Result -->
       <div class="result-section" id="resultSection">
-        <div class="result-title">Customer Invoice Link</div>
 
-        <input type="text" id="generatedLink" class="link-input" readonly>
+        <div class="result-title">
+          Customer Invoice Link
+        </div>
 
-        <button type="button" class="action-button copy-button" onclick="copyLink()">
+        <input
+          type="text"
+          id="generatedLink"
+          class="link-input"
+          readonly
+        >
+
+        <button
+          type="button"
+          class="action-button copy-button"
+          onclick="copyLink()"
+        >
           COPY LINK
         </button>
 
-        <a href="#" id="openInvoice" class="open-button" target="_blank">
+        <a
+          href="#"
+          id="openInvoice"
+          class="open-button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           OPEN INVOICE
         </a>
 
-        <button type="button" class="action-button shorten-button" onclick="shortenLink()">
+        <button
+          type="button"
+          class="action-button shorten-button"
+          onclick="shortenLink()"
+        >
           SHORTEN LINK WITH TINYURL
         </button>
 
-        <button type="button" class="action-button whatsapp-button" onclick="sendWhatsApp()">
+        <button
+          type="button"
+          class="action-button whatsapp-button"
+          onclick="sendWhatsApp()"
+        >
           SEND ON WHATSAPP
         </button>
 
@@ -204,88 +346,470 @@
         </div>
 
         <div class="instructions">
-          <strong>How to create a short link:</strong><br>
-          1. Click <strong>SHORTEN LINK WITH TINYURL</strong> (the long link is copied automatically).<br>
-          2. Paste it into TinyURL and create your short link.<br>
-          3. Share the short link with your customer.
+
+          <strong>How to create a short link:</strong>
+          <br>
+
+          1. Click
+          <strong>SHORTEN LINK WITH TINYURL</strong>.
+          <br>
+
+          2. The invoice link will be copied automatically.
+          <br>
+
+          3. Paste it into TinyURL and create your short link.
+          <br>
+
+          4. Share the short link with your customer.
+
         </div>
+
       </div>
+
     </div>
+
   </div>
 
+
   <script>
-    // Points to your invoice page
+
+    /*
+     * CUSTOMER INVOICE FILE
+     *
+     * This file must be in the same GitHub Pages folder
+     * as invoice-generator.html.
+     */
     const INVOICE_PAGE = "customer-invoice.html";
 
+
+    /*
+     * GENERATE INVOICE
+     */
     function generateInvoice() {
-      const name = document.getElementById('customerName').value.trim();
-      const invoice = document.getElementById('invoiceNumber').value.trim();
-      const amount = document.getElementById('amount').value.trim();
-      const period = document.getElementById('billingPeriod').value.trim();
-      const date = document.getElementById('invoiceDate').value.trim();
 
-      if (!name || !invoice || !amount) {
-        alert('Please fill at least Customer Name, Invoice Number and Amount.');
-        return;
+      try {
+
+        const name =
+          document.getElementById("customerName").value.trim();
+
+        const invoice =
+          document.getElementById("invoiceNumber").value.trim();
+
+        const amount =
+          document.getElementById("amount").value.trim();
+
+        const period =
+          document.getElementById("billingPeriod").value.trim();
+
+        const date =
+          document.getElementById("invoiceDate").value.trim();
+
+
+        /*
+         * Required fields
+         */
+        if (!name || !invoice || !amount) {
+
+          alert(
+            "Please fill at least Customer Name, Invoice Number and Amount."
+          );
+
+          return;
+        }
+
+
+        /*
+         * Hide previous error
+         */
+        const errorMessage =
+          document.getElementById("errorMessage");
+
+        errorMessage.style.display = "none";
+
+
+        /*
+         * Preview
+         */
+        document.getElementById("previewName").textContent =
+          name;
+
+        document.getElementById("previewInvoice").textContent =
+          invoice;
+
+        document.getElementById("previewAmount").textContent =
+          amount;
+
+        document.getElementById("previewPeriod").textContent =
+          period || "—";
+
+        document.getElementById("previewDate").textContent =
+          date || "—";
+
+        document.getElementById("previewBox").style.display =
+          "block";
+
+
+        /*
+         * Invoice data
+         */
+        const invoiceData = {
+
+          name: name,
+
+          invoice: invoice,
+
+          amount: amount,
+
+          period: period,
+
+          date: date
+
+        };
+
+
+        /*
+         * Convert invoice data into JSON
+         */
+        const json =
+          JSON.stringify(invoiceData);
+
+
+        /*
+         * Encode JSON so it can safely
+         * be placed inside the URL.
+         */
+        const hash =
+          encodeURIComponent(json);
+
+
+        /*
+         * IMPORTANT:
+         *
+         * This creates the FULL URL automatically.
+         *
+         * Example:
+         *
+         * https://bellyfreenation.github.io/bellyfreenation/customer-invoice.html#...
+         */
+        const fullLink =
+          new URL(
+            INVOICE_PAGE,
+            window.location.href
+          ).href + "#" + hash;
+
+
+        /*
+         * Put generated link into box
+         */
+        document.getElementById("generatedLink").value =
+          fullLink;
+
+
+        /*
+         * Set OPEN INVOICE button
+         */
+        document.getElementById("openInvoice").href =
+          fullLink;
+
+
+        /*
+         * Show result
+         */
+        document.getElementById("resultSection").style.display =
+          "block";
+
+
+        /*
+         * Scroll down so the generated
+         * link is visible.
+         */
+        document.getElementById("resultSection")
+          .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
       }
 
-      // Fill preview
-      document.getElementById('previewName').textContent = name;
-      document.getElementById('previewInvoice').textContent = invoice;
-      document.getElementById('previewAmount').textContent = amount;
-      document.getElementById('previewPeriod').textContent = period;
-      document.getElementById('previewDate').textContent = date;
-      document.getElementById('previewBox').style.display = 'block';
+      catch (error) {
 
-      // Data format expected by customer-invoice.html
-      const invoiceData = {
-        name: name,
-        invoice: invoice,
-        amount: amount,
-        period: period,
-        date: date
-      };
+        console.error(
+          "Invoice generation error:",
+          error
+        );
 
-      // Create the correct hash link
-      const hash = encodeURIComponent(JSON.stringify(invoiceData));
-      const fullLink = INVOICE_PAGE + "#" + hash;
+        const errorMessage =
+          document.getElementById("errorMessage");
 
-      document.getElementById('generatedLink').value = fullLink;
-      document.getElementById('openInvoice').href = fullLink;
+        errorMessage.textContent =
+          "Something went wrong while generating the invoice link.";
 
-      document.getElementById('resultSection').style.display = 'block';
+        errorMessage.style.display =
+          "block";
+      }
+
     }
 
+
+    /*
+     * COPY LINK
+     */
     function copyLink() {
-      const linkInput = document.getElementById('generatedLink');
-      linkInput.select();
-      linkInput.setSelectionRange(0, 99999);
 
-      navigator.clipboard.writeText(linkInput.value).then(() => {
-        const success = document.getElementById('success');
-        success.style.display = 'block';
-        setTimeout(() => success.style.display = 'none', 2500);
-      }).catch(() => {
-        document.execCommand('copy');
-        alert('Link copied!');
-      });
-    }
+      const link =
+        document.getElementById("generatedLink").value;
 
-    function shortenLink() {
-      const longUrl = document.getElementById('generatedLink').value;
-      if (!longUrl) {
-        alert('Please generate the invoice link first.');
+
+      if (!link) {
+
+        alert(
+          "Please generate the invoice link first."
+        );
+
         return;
       }
 
-      // Make absolute URL
-      const absoluteUrl = new URL(longUrl, window.location.href).href;
 
-      navigator.clipboard.writeText(absoluteUrl).then(() => {
-        window.open('https://tinyurl.com/app', '_blank');
-        alert('Long link copied!\n\nPaste it into TinyURL and create your short link.');
-      });
+      /*
+       * Modern clipboard
+       */
+      if (
+        navigator.clipboard &&
+        window.isSecureContext
+      ) {
+
+        navigator.clipboard.writeText(link)
+          .then(function () {
+
+            showSuccess(
+              "Link copied successfully!"
+            );
+
+          })
+          .catch(function () {
+
+            fallbackCopy(link);
+
+          });
+
+      }
+
+      else {
+
+        fallbackCopy(link);
+
+      }
+
     }
 
+
+    /*
+     * FALLBACK COPY
+     */
+    function fallbackCopy(text) {
+
+      const input =
+        document.getElementById("generatedLink");
+
+      input.focus();
+      input.select();
+      input.setSelectionRange(
+        0,
+        input.value.length
+      );
+
+      try {
+
+        document.execCommand("copy");
+
+        showSuccess(
+          "Link copied successfully!"
+        );
+
+      }
+
+      catch (error) {
+
+        alert(
+          "Please select and copy the link manually."
+        );
+
+      }
+
+    }
+
+
+    /*
+     * SUCCESS MESSAGE
+     */
+    function showSuccess(message) {
+
+      const success =
+        document.getElementById("success");
+
+      success.textContent =
+        message;
+
+      success.style.display =
+        "block";
+
+
+      setTimeout(function () {
+
+        success.style.display =
+          "none";
+
+      }, 2500);
+
+    }
+
+
+    /*
+     * SHORTEN LINK
+     */
+    function shortenLink() {
+
+      const longUrl =
+        document.getElementById("generatedLink").value;
+
+
+      if (!longUrl) {
+
+        alert(
+          "Please generate the invoice link first."
+        );
+
+        return;
+      }
+
+
+      /*
+       * Copy link first
+       */
+      if (
+        navigator.clipboard &&
+        window.isSecureContext
+      ) {
+
+        navigator.clipboard.writeText(longUrl)
+          .then(function () {
+
+            window.open(
+              "https://tinyurl.com/app",
+              "_blank"
+            );
+
+            alert(
+              "Invoice link copied!\n\n" +
+              "Paste it into TinyURL and create your short link."
+            );
+
+          })
+          .catch(function () {
+
+            fallbackCopy(longUrl);
+
+            window.open(
+              "https://tinyurl.com/app",
+              "_blank"
+            );
+
+          });
+
+      }
+
+      else {
+
+        fallbackCopy(longUrl);
+
+        window.open(
+          "https://tinyurl.com/app",
+          "_blank"
+        );
+
+        alert(
+          "Invoice link copied!\n\n" +
+          "Paste it into TinyURL and create your short link."
+        );
+
+      }
+
+    }
+
+
+    /*
+     * SEND ON WHATSAPP
+     */
     function sendWhatsApp() {
-      const 
+
+      const longUrl =
+        document.getElementById("generatedLink").value;
+
+      const name =
+        document.getElementById("customerName")
+          .value
+          .trim();
+
+      const amount =
+        document.getElementById("amount")
+          .value
+          .trim();
+
+      const invoice =
+        document.getElementById("invoiceNumber")
+          .value
+          .trim();
+
+
+      if (!longUrl) {
+
+        alert(
+          "Please generate the invoice link first."
+        );
+
+        return;
+      }
+
+
+      /*
+       * Create WhatsApp message
+       */
+      const message =
+        "Hello " + name + ",\n\n" +
+
+        "Here is your invoice (" +
+        invoice +
+        ") for ₹" +
+        amount +
+        ":\n\n" +
+
+        longUrl +
+        "\n\n" +
+
+        "Thank you!\n" +
+
+        "— Belly Free Nation";
+
+
+      /*
+       * Encode message for WhatsApp
+       */
+      const whatsappUrl =
+        "https://wa.me/?text=" +
+        encodeURIComponent(message);
+
+
+      /*
+       * Open WhatsApp
+       */
+      window.open(
+        whatsappUrl,
+        "_blank"
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>

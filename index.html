@@ -170,47 +170,6 @@
         font-weight: 600;
         margin-top: 10px !important;
     }
-    .pay-button {
-        display: block;
-        margin-top: 19px;
-        background: #2E8B57;
-        color: #ffffff;
-        text-decoration: none;
-        text-align: center;
-        padding: 16px;
-        border-radius: 8px;
-        font-size: 17px;
-        font-weight: bold;
-        letter-spacing: 0.2px;
-    }
-    .pay-button:hover {
-        background: #26764a;
-    }
-    .app-buttons {
-        display: flex;
-        gap: 12px;
-        margin-top: 14px;
-        flex-wrap: wrap;
-    }
-    .app-buttons a {
-        flex: 1;
-        min-width: 140px;
-        font-size: 15px;
-        padding: 13px;
-        margin-top: 0;
-    }
-    .phonepe-btn {
-        background: #5f259f !important;
-    }
-    .phonepe-btn:hover {
-        background: #4a1d7a !important;
-    }
-    .gpay-btn {
-        background: #4285f4 !important;
-    }
-    .gpay-btn:hover {
-        background: #3367d6 !important;
-    }
     .payment-note {
         margin-top: 15px !important;
         color: #555 !important;
@@ -284,6 +243,7 @@
 <body>
 <div class="page">
 <div class="invoice">
+
     <!-- HEADER -->
     <div class="header">
         <div class="brand">
@@ -330,7 +290,6 @@
             Freshly prepared meals tailored to your plan.
         </div>
 
-        <!-- INCLUDED BENEFITS -->
         <div class="included-box">
             <div class="included-title">
                 Included With Your BFN Plan
@@ -362,28 +321,15 @@
     <div class="payment-box">
         <h3>Payment</h3>
         <p>
-            Please complete your payment using UPI.
+            Please scan the QR code below to complete your payment using any UPI app.
         </p>
         <p class="upi-id">
-            UPI ID: 6309075979-2@ybl
+            UPI ID: 6309075979@ybl
         </p>
 
-        <!-- Main button (best for Android) -->
-        <a class="pay-button"
-           href="upi://pay?pa=6309075979-2%40ybl&pn=Belly%20Free%20Nation&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
-            PAY ₹12,858 (Any UPI App)
-        </a>
-
-        <!-- Extra buttons for iPhone -->
-        <div class="app-buttons">
-            <a class="pay-button phonepe-btn"
-               href="phonepe://pay?pa=6309075979-2%40ybl&pn=Belly%20Free%20Nation&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
-                Open PhonePe
-            </a>
-            <a class="pay-button gpay-btn"
-               href="tez://upi/pay?pa=6309075979-2%40ybl&pn=Belly%20Free%20Nation&am=12858.00&cu=INR&tn=BFN-001-Sri-Sudha">
-                Open Google Pay
-            </a>
+        <!-- QR Code -->
+        <div style="text-align: center; margin: 25px 0;">
+            <img src="qr-code.jpeg" alt="UPI QR Code" style="width: 220px; height: 220px; border-radius: 12px; border: 1px solid #ddd;">
         </div>
 
         <p class="payment-note">
@@ -411,6 +357,7 @@
             Real food. Clear results.
         </strong>
     </div>
+
 </div>
 </div>
 </body>

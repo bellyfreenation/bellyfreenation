@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>BFN Invoice Generator</title>
 
   <style>
@@ -22,7 +23,7 @@
     .container {
       max-width: 520px;
       margin: 0 auto;
-      background: white;
+      background: #ffffff;
       border-radius: 14px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
       overflow: hidden;
@@ -30,7 +31,7 @@
 
     .header {
       background: #174A35;
-      color: white;
+      color: #ffffff;
       padding: 22px;
       text-align: center;
     }
@@ -49,7 +50,7 @@
       font-size: 0.9rem;
       font-weight: 600;
       margin-bottom: 6px;
-      color: #333;
+      color: #333333;
     }
 
     input[type="text"] {
@@ -67,10 +68,15 @@
       box-shadow: 0 0 0 3px rgba(23, 74, 53, 0.15);
     }
 
+    /* Invoice number is always displayed uppercase */
+    #invoiceNumber {
+      text-transform: uppercase;
+    }
+
     .generate-button {
       width: 100%;
       background: #174A35;
-      color: white;
+      color: #ffffff;
       border: none;
       padding: 14px;
       font-size: 1rem;
@@ -91,8 +97,8 @@
       padding: 16px;
       margin: 24px 0;
       font-size: 0.95rem;
-      display: none;
       line-height: 1.7;
+      display: none;
     }
 
     .preview-box strong {
@@ -188,6 +194,16 @@
       margin: 12px 0;
     }
 
+    .error-message {
+      display: none;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
     .instructions {
       background: #f0f7f2;
       border-left: 4px solid #174A35;
@@ -199,14 +215,14 @@
       line-height: 1.6;
     }
 
-    .error-message {
-      display: none;
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 16px;
-      font-size: 0.9rem;
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .content {
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -221,41 +237,58 @@
 
   <div class="content">
 
+    <!-- CUSTOMER NAME -->
     <label for="customerName">Customer Name</label>
+
     <input
       type="text"
       id="customerName"
       placeholder="e.g. Sushma Reddy"
     >
 
+
+    <!-- INVOICE NUMBER -->
     <label for="invoiceNumber">Invoice Number</label>
+
     <input
       type="text"
       id="invoiceNumber"
       placeholder="e.g. BFN-112"
+      oninput="formatInvoiceInput(this)"
     >
 
+
+    <!-- AMOUNT -->
     <label for="amount">Amount (₹)</label>
+
     <input
       type="text"
       id="amount"
       placeholder="e.g. 5000"
     >
 
+
+    <!-- BILLING PERIOD -->
     <label for="billingPeriod">Billing Period</label>
+
     <input
       type="text"
       id="billingPeriod"
       placeholder="e.g. Oct 1 - Oct 10, 2026"
     >
 
+
+    <!-- INVOICE DATE -->
     <label for="invoiceDate">Invoice Date</label>
+
     <input
       type="text"
       id="invoiceDate"
       placeholder="e.g. Oct 1, 2026"
     >
 
+
+    <!-- GENERATE BUTTON -->
     <button
       type="button"
       class="generate-button"
@@ -264,13 +297,15 @@
       GENERATE INVOICE LINK
     </button>
 
+
+    <!-- ERROR -->
     <div
       class="error-message"
       id="errorMessage"
     ></div>
 
-    <!-- PREVIEW -->
 
+    <!-- PREVIEW -->
     <div
       class="preview-box"
       id="previewBox"
@@ -280,18 +315,22 @@
 
       Customer:
       <span id="previewName"></span>
+
       <br>
 
       Invoice:
       <span id="previewInvoice"></span>
+
       <br>
 
       Amount:
       ₹<span id="previewAmount"></span>
+
       <br>
 
       Period:
       <span id="previewPeriod"></span>
+
       <br>
 
       Date:
@@ -301,7 +340,6 @@
 
 
     <!-- RESULT -->
-
     <div
       class="result-section"
       id="resultSection"
@@ -311,6 +349,8 @@
         Customer Invoice Link
       </div>
 
+
+      <!-- GENERATED LINK -->
       <input
         type="text"
         id="generatedLink"
@@ -318,6 +358,8 @@
         readonly
       >
 
+
+      <!-- COPY -->
       <button
         type="button"
         class="action-button copy-button"
@@ -326,6 +368,8 @@
         COPY LINK
       </button>
 
+
+      <!-- OPEN -->
       <a
         href="#"
         id="openInvoice"
@@ -336,6 +380,8 @@
         OPEN INVOICE
       </a>
 
+
+      <!-- TINYURL -->
       <button
         type="button"
         class="action-button shorten-button"
@@ -344,6 +390,8 @@
         SHORTEN LINK WITH TINYURL
       </button>
 
+
+      <!-- WHATSAPP -->
       <button
         type="button"
         class="action-button whatsapp-button"
@@ -352,6 +400,8 @@
         SEND ON WHATSAPP
       </button>
 
+
+      <!-- SUCCESS -->
       <div
         class="success"
         id="success"
@@ -359,18 +409,16 @@
         Link copied successfully!
       </div>
 
+
+      <!-- INSTRUCTIONS -->
       <div class="instructions">
 
-        <strong>
-          How to create a short link:
-        </strong>
+        <strong>How to create a short link:</strong>
 
         <br>
 
         1. Click
-        <strong>
-          SHORTEN LINK WITH TINYURL
-        </strong>.
+        <strong>SHORTEN LINK WITH TINYURL</strong>.
 
         <br>
 
@@ -407,13 +455,12 @@ const INVOICE_PAGE = "customer-invoice.html";
    =========================================================
 
    sush re
-   ↓
-   Sush Re
+   → Sush Re
 
    SUSHMA REDDY
-   ↓
-   Sushma Reddy
-*/
+   → Sushma Reddy
+
+========================================================= */
 
 function formatName(value) {
 
@@ -422,9 +469,7 @@ function formatName(value) {
     .replace(/\s+/g, " ")
     .toLowerCase()
     .replace(/\b\w/g, function(letter) {
-
       return letter.toUpperCase();
-
     });
 
 }
@@ -435,17 +480,18 @@ function formatName(value) {
    =========================================================
 
    bfn-1
-   ↓
-   BFN-1
+   → BFN-1
 
    bfn - 1
-   ↓
-   BFN-1
+   → BFN-1
 
    bFn -1
-   ↓
-   BFN-1
-*/
+   → BFN-1
+
+   BFn  -  112
+   → BFN-112
+
+========================================================= */
 
 function formatInvoiceNumber(value) {
 
@@ -459,17 +505,34 @@ function formatInvoiceNumber(value) {
 
 
 /* =========================================================
+   FORMAT INVOICE NUMBER WHILE TYPING
+   ========================================================= */
+
+function formatInvoiceInput(input) {
+
+  let value = input.value;
+
+  value = value
+    .toUpperCase()
+    .replace(/\s*-\s*/g, "-")
+    .replace(/\s+/g, "");
+
+  input.value = value;
+
+}
+
+
+/* =========================================================
    FORMAT DATE
    =========================================================
 
    oct 3 , 2026
-   ↓
-   Oct 3, 2026
+   → Oct 3, 2026
 
    OCT 3,2026
-   ↓
-   Oct 3, 2026
-*/
+   → Oct 3, 2026
+
+========================================================= */
 
 function formatDate(value) {
 
@@ -564,9 +627,9 @@ function formatDate(value) {
    =========================================================
 
    oct 1-oct 3 , 2026
-   ↓
-   Oct 1 - Oct 3, 2026
-*/
+   → Oct 1 - Oct 3, 2026
+
+========================================================= */
 
 function formatBillingPeriod(value) {
 
@@ -576,7 +639,8 @@ function formatBillingPeriod(value) {
 
   let text = value
     .trim()
-    .replace(/\s+/g, " ");
+    .replace(/\s+/g, " ")
+    .toLowerCase();
 
 
   /* Normalize hyphen */
@@ -595,27 +659,17 @@ function formatBillingPeriod(value) {
   );
 
 
-  /* Lowercase first */
-
-  text = text.toLowerCase();
-
-
   /* Capitalize words */
 
   text = text.replace(
     /\b\w/g,
     function(letter) {
-
       return letter.toUpperCase();
-
     }
   );
 
 
-  /*
-   * Convert full month names
-   * to 3-letter month names.
-   */
+  /* Short month names */
 
   const monthMap = {
 
@@ -687,7 +741,7 @@ function generateInvoice() {
 
   try {
 
-    /* Read input values */
+    /* Read raw values */
 
     const rawName =
       document.getElementById(
@@ -701,10 +755,10 @@ function generateInvoice() {
       ).value;
 
 
-    const amount =
+    const rawAmount =
       document.getElementById(
         "amount"
-      ).value.trim();
+      ).value;
 
 
     const rawPeriod =
@@ -724,7 +778,7 @@ function generateInvoice() {
     if (
       !rawName.trim() ||
       !rawInvoice.trim() ||
-      !amount
+      !rawAmount.trim()
     ) {
 
       alert(
@@ -736,7 +790,7 @@ function generateInvoice() {
     }
 
 
-    /* Format values */
+    /* Format everything */
 
     const name =
       formatName(rawName);
@@ -744,6 +798,10 @@ function generateInvoice() {
 
     const invoice =
       formatInvoiceNumber(rawInvoice);
+
+
+    const amount =
+      rawAmount.trim();
 
 
     const period =
@@ -754,10 +812,7 @@ function generateInvoice() {
       formatDate(rawDate);
 
 
-    /*
-     * Put formatted values
-     * back into the form.
-     */
+    /* Put formatted values back into form */
 
     document.getElementById(
       "customerName"
@@ -779,7 +834,9 @@ function generateInvoice() {
     ).value = date;
 
 
-    /* Preview */
+    /* =====================================================
+       PREVIEW
+    ===================================================== */
 
     document.getElementById(
       "previewName"
@@ -798,12 +855,14 @@ function generateInvoice() {
 
     document.getElementById(
       "previewPeriod"
-    ).textContent = period || "—";
+    ).textContent =
+      period || "—";
 
 
     document.getElementById(
       "previewDate"
-    ).textContent = date || "—";
+    ).textContent =
+      date || "—";
 
 
     document.getElementById(
@@ -811,9 +870,9 @@ function generateInvoice() {
     ).style.display = "block";
 
 
-    /*
-     * Create invoice data.
-     */
+    /* =====================================================
+       INVOICE DATA
+    ===================================================== */
 
     const invoiceData = {
 
@@ -830,69 +889,70 @@ function generateInvoice() {
     };
 
 
-    /*
-     * Convert to JSON.
-     */
+    /* Convert data to JSON */
 
     const json =
-      JSON.stringify(
-        invoiceData
-      );
+      JSON.stringify(invoiceData);
 
 
-    /*
-     * Encode JSON.
-     */
+    /* Encode JSON */
 
     const hash =
-      encodeURIComponent(
-        json
-      );
+      encodeURIComponent(json);
 
 
-    /*
-     * Create complete URL.
-     */
+    /* =====================================================
+       CREATE FULL CUSTOMER URL
+    ===================================================== */
 
-    const fullLink =
+    const invoicePageUrl =
       new URL(
         INVOICE_PAGE,
         window.location.href
-      ).href +
+      ).href;
+
+
+    const fullLink =
+      invoicePageUrl +
       "#" +
       hash;
 
 
-    /*
-     * Show generated link.
-     */
+    /* =====================================================
+       SHOW LINK
+    ===================================================== */
 
     document.getElementById(
       "generatedLink"
     ).value = fullLink;
 
 
-    /*
-     * Set Open Invoice button.
-     */
+    /* =====================================================
+       OPEN INVOICE BUTTON
+    ===================================================== */
 
     document.getElementById(
       "openInvoice"
     ).href = fullLink;
 
 
-    /*
-     * Show result section.
-     */
+    /* =====================================================
+       SHOW RESULT
+    ===================================================== */
 
     document.getElementById(
       "resultSection"
     ).style.display = "block";
 
 
-    /*
-     * Scroll to result.
-     */
+    /* Hide previous error */
+
+    document.getElementById(
+      "errorMessage"
+    ).style.display = "none";
+
+
+    /* Scroll to result */
 
     document.getElementById(
       "resultSection"
@@ -922,7 +982,7 @@ function generateInvoice() {
 
 
     errorMessage.textContent =
-      "Something went wrong while generating the invoice link.";
+      "Something went wrong while generating the invoice link. Please refresh the page and try again.";
 
 
     errorMessage.style.display =
@@ -1089,6 +1149,16 @@ function shortenLink() {
   }
 
 
+  function openTinyURL() {
+
+    window.open(
+      "https://tinyurl.com/app",
+      "_blank"
+    );
+
+  }
+
+
   if (
     navigator.clipboard &&
     window.isSecureContext
@@ -1098,11 +1168,7 @@ function shortenLink() {
       .writeText(longUrl)
       .then(function() {
 
-        window.open(
-          "https://tinyurl.com/app",
-          "_blank"
-        );
-
+        openTinyURL();
 
         alert(
           "Invoice link copied!\n\n" +
@@ -1114,11 +1180,7 @@ function shortenLink() {
 
         fallbackCopy();
 
-
-        window.open(
-          "https://tinyurl.com/app",
-          "_blank"
-        );
+        openTinyURL();
 
       });
 
@@ -1128,11 +1190,7 @@ function shortenLink() {
 
     fallbackCopy();
 
-
-    window.open(
-      "https://tinyurl.com/app",
-      "_blank"
-    );
+    openTinyURL();
 
   }
 
@@ -1151,24 +1209,6 @@ function sendWhatsApp() {
     ).value;
 
 
-  const name =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
-
-
-  const amount =
-    document.getElementById(
-      "amount"
-    ).value.trim();
-
-
-  const invoice =
-    document.getElementById(
-      "invoiceNumber"
-    ).value.trim();
-
-
   if (!longUrl) {
 
     alert(
@@ -1178,6 +1218,30 @@ function sendWhatsApp() {
     return;
 
   }
+
+
+  /* Use the already formatted values */
+
+  const name =
+    formatName(
+      document.getElementById(
+        "customerName"
+      ).value
+    );
+
+
+  const amount =
+    document.getElementById(
+      "amount"
+    ).value.trim();
+
+
+  const invoice =
+    formatInvoiceNumber(
+      document.getElementById(
+        "invoiceNumber"
+      ).value
+    );
 
 
   const message =

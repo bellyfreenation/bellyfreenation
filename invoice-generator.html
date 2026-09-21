@@ -1,1 +1,1122 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Belly Free Nation | Invoice Generator</title> <style> * { box-sizing: border-box; } body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f3f5f1; color: #252525; } .container { max-width: 600px; margin: 40px auto; padding: 20px; } .box { background: #ffffff; border-radius: 14px; padding: 35px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); } h1 { margin: 0; color: #174A35; font-size: 26px; letter-spacing: 0.5px; } .subtitle { margin-top: 8px; margin-bottom: 30px; color: #777; font-size: 14px; } label { display: block; margin-top: 18px; margin-bottom: 7px; font-size: 12px; color: #666; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; } input { width: 100%; padding: 13px 14px; border: 1px solid #d5d5d5; border-radius: 8px; font-size: 15px; outline: none; } input:focus { border-color: #174A35; } button { font-family: inherit; cursor: pointer; } .generate-button { width: 100%; margin-top: 28px; padding: 15px; background: #174A35; color: #ffffff; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; } .generate-button:hover { background: #0f3928; } .result { display: none; margin-top: 30px; padding: 20px; background: #f5f8f4; border: 1px solid #dfe8df; border-radius: 10px; } .result-title { color: #174A35; font-weight: bold; margin-bottom: 12px; } .link-input { background: #ffffff; font-size: 12px; margin-bottom: 10px; } .action-button { width: 100%; padding: 13px; margin-top: 10px; border-radius: 8px; font-size: 14px; font-weight: bold; } .copy-button { background: #174A35; color: #ffffff; border: none; } .shorten-button { background: #ffffff; color: #174A35; border: 1px solid #174A35; } .open-button { display: block; width: 100%; margin-top: 10px; padding: 13px; background: #ffffff; color: #174A35; border: 1px solid #174A35; border-radius: 8px; font-size: 14px; font-weight: bold; text-align: center; text-decoration: none; } .whatsapp-button { background: #25D366; color: #ffffff; border: none; } .success { display: none; margin-top: 12px; color: #174A35; font-size: 13px; font-weight: bold; } .preview { display: none; margin-top: 20px; padding: 15px; background: #ffffff; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px; line-height: 1.8; } .preview strong { color: #174A35; } .instructions { margin-top: 20px; padding: 15px; background: #fffaf0; border: 1px solid #eee1c5; border-radius: 8px; color: #665a43; font-size: 13px; line-height: 1.6; } @media (max-width: 600px) { .container { margin: 15px auto; padding: 10px; } .box { padding: 25px 20px; } } </style> </head> <body> <div class="container"> <div class="box"> <h1> BELLY FREE NATION </h1> <div class="subtitle"> Invoice Generator </div> <!-- CUSTOMER NAME --> <label> Customer Name </label> <input type="text" id="customerName" placeholder="e.g. Sushma Reddy" > <!-- INVOICE NUMBER --> <label> Invoice Number </label> <input type="text" id="invoiceNumber" placeholder="e.g. BFN-112" > <!-- AMOUNT --> <label> Amount </label> <input type="text" id="amount" placeholder="e.g. 5000" > <!-- BILLING PERIOD --> <label> Billing Period </label> <input type="text" id="billingPeriod" placeholder="e.g. Oct 1 - Oct 10, 2026" > <!-- INVOICE DATE --> <label> Invoice Date </label> <input type="text" id="invoiceDate" placeholder="e.g. Oct 1, 2026" > <!-- GENERATE --> <button type="button" class="generate-button" onclick="generateInvoice()"> GENERATE INVOICE LINK </button> <!-- PREVIEW --> <div class="preview" id="preview"> <strong> Invoice Preview </strong> <br> Customer: <span id="previewName"></span> <br> Invoice: <span id="previewInvoice"></span> <br> Amount: ₹<span id="previewAmount"></span> <br> Period: <span id="previewPeriod"></span> <br> Date: <span id="previewDate"></span> </div> <!-- RESULT --> <div class="result" id="result"> <div class="result-title"> Customer Invoice Link </div> <input type="text" id="generatedLink" class="link-input" readonly > <!-- COPY --> <button type="button" class="action-button copy-button" onclick="copyLink()"> COPY LINK </button> <!-- OPEN --> <a href="#" id="openInvoice" class="open-button"> OPEN INVOICE </a> <!-- SHORTEN --> <button type="button" class="action-button shorten-button" onclick="shortenLink()"> SHORTEN LINK WITH TINYURL </button> <!-- WHATSAPP --> <button type="button" class="action-button whatsapp-button" onclick="sendWhatsApp()"> SEND ON WHATSAPP </button> <div class="success" id="success"> ✓ Link copied successfully! </div> <div class="instructions"> <strong> Short link: </strong> <br> Click "SHORTEN LINK WITH TINYURL". <br><br> The invoice link will be copied automatically. <br><br> Paste it into TinyURL and create your short link. </div> </div> </div> </div> <script> /* ========================================================= FORMAT CUSTOMER NAME ========================================================= */ function formatName(name) { return name .trim() .replace(/\s+/g, " ") .toLowerCase() .split(" ") .map(function(word) { if (!word) { return ""; } return word.charAt(0).toUpperCase() + word.slice(1); }) .join(" "); } /* ========================================================= FORMAT MONTH ========================================================= */ function formatMonth(month) { const months = { jan: "Jan", january: "Jan", feb: "Feb", february: "Feb", mar: "Mar", march: "Mar", apr: "Apr", april: "Apr", may: "May", jun: "Jun", june: "Jun", jul: "Jul", july: "Jul", aug: "Aug", august: "Aug", sep: "Sep", sept: "Sep", september: "Sep", oct: "Oct", october: "Oct", nov: "Nov", november: "Nov", dec: "Dec", december: "Dec" }; const key = month .trim() .toLowerCase(); return months[key] || month; } /* ========================================================= FORMAT ONE DATE ========================================================= */ function formatDate(dateText) { let text = dateText .trim() .replace(/\s+/g, " ") .replace(/\//g, "-") .replace(/\s*,\s*/g, ", ") .trim(); /* MONTH + YEAR Example: Oct 2026 October 2026 Result: Oct 2026 */ let monthYear = text.match( /^([A-Za-z]+)\s+(\d{4})$/i ); if (monthYear) { const month = formatMonth(monthYear[1]); const year = monthYear[2]; return month + " " + year; } /* MONTH + DAY + YEAR Examples: Oct 1 2026 Oct 1, 2026 October 1 2026 Result: Oct 1, 2026 */ let fullDate = text.match( /^([A-Za-z]+)\s+(\d{1,2})(?:\s*,?\s*(\d{4}))?$/i ); if (fullDate) { const month = formatMonth(fullDate[1]); const day = Number(fullDate[2]); const year = fullDate[3] ? fullDate[3] : ""; return ( month + " " + day + ( year ? ", " + year : "" ) ); } /* DAY + MONTH + YEAR Example: 1 Oct 2026 Result: Oct 1, 2026 */ let dayMonthYear = text.match( /^(\d{1,2})\s+([A-Za-z]+)(?:\s*,?\s*(\d{4}))?$/i ); if (dayMonthYear) { const day = Number(dayMonthYear[1]); const month = formatMonth(dayMonthYear[2]); const year = dayMonthYear[3] ? dayMonthYear[3] : ""; return ( month + " " + day + ( year ? ", " + year : "" ) ); } /* If nothing matches, return cleaned text. */ return text; } /* ========================================================= FORMAT BILLING PERIOD ========================================================= */ function formatPeriod(periodText) { let text = periodText .trim() .replace(/\s+/g, " "); /* Convert different dash styles into normal - */ text = text.replace(/[–—]/g, "-"); const parts = text.split("-"); /* If only one date was entered */ if (parts.length === 1) { return formatDate(parts[0]); } /* Start and end dates */ let start = parts[0].trim(); let end = parts.slice(1) .join("-") .trim(); /* Find year */ const yearMatch = text.match(/\b(20\d{2})\b/); const year = yearMatch ? yearMatch[1] : new Date().getFullYear(); /* Remove year temporarily */ start = start .replace(/\b20\d{2}\b/g, "") .trim() .replace(/,\s*$/, ""); end = end .replace(/\b20\d{2}\b/g, "") .trim() .replace(/,\s*$/, ""); /* Format both dates */ let formattedStart = formatDate(start); let formattedEnd = formatDate(end); /* Add year to END */ formattedEnd = formattedEnd + ", " + year; return ( formattedStart + " - " + formattedEnd ); } /* ========================================================= FORMAT AMOUNT ========================================================= */ function formatAmount(amount) { const clean = amount .replace(/,/g, "") .replace(/₹/g, "") .trim(); const number = Number(clean); if (isNaN(number)) { return clean; } return number .toLocaleString("en-IN"); } /* ========================================================= GENERATE INVOICE LINK ========================================================= */ function generateInvoice() { /* Get values */ const rawName = document .getElementById("customerName") .value; const rawInvoice = document .getElementById("invoiceNumber") .value; const rawAmount = document .getElementById("amount") .value; const rawPeriod = document .getElementById("billingPeriod") .value; const rawDate = document .getElementById("invoiceDate") .value; /* Check fields */ if ( !rawName.trim() || !rawInvoice.trim() || !rawAmount.trim() || !rawPeriod.trim() || !rawDate.trim() ) { alert( "Please fill in all fields." ); return; } /* Standardize values */ const name = formatName(rawName); const invoice = rawInvoice .trim() .toUpperCase() .replace(/\s+/g, ""); const amount = rawAmount .replace(/,/g, "") .replace(/₹/g, "") .trim(); const period = formatPeriod(rawPeriod); const date = formatDate(rawDate); /* Create invoice data */ const invoiceData = { name: name, invoice: invoice, amount: amount, period: period, date: date }; /* Convert to JSON */ const json = JSON.stringify( invoiceData ); /* Encode invoice data encodeURIComponent makes the JSON safe for btoa(). */ const encoded = btoa( encodeURIComponent( json ) ); /* Create customer invoice URL. IMPORTANT: Both files must be in the same folder: invoice-generator.html customer-invoice.html */ const customerLink = window.location.origin + window.location.pathname .replace( "invoice-generator.html", "customer-invoice.html" ) + "#" + encoded; /* Show preview */ document .getElementById("previewName") .textContent = name; document .getElementById("previewInvoice") .textContent = invoice; document .getElementById("previewAmount") .textContent = formatAmount(amount); document .getElementById("previewPeriod") .textContent = period; document .getElementById("previewDate") .textContent = date; document .getElementById("preview") .style.display = "block"; /* Put generated link into link box */ document .getElementById("generatedLink") .value = customerLink; /* Set OPEN INVOICE button */ document .getElementById("openInvoice") .href = customerLink; /* Show result */ document .getElementById("result") .style.display = "block"; /* Hide old success message */ document .getElementById("success") .style.display = "none"; } /* ========================================================= COPY LINK ========================================================= */ function copyLink() { const link = document .getElementById("generatedLink"); link.focus(); link.select(); link.setSelectionRange( 0, link.value.length ); try { document.execCommand("copy"); document .getElementById("success") .style.display = "block"; } catch (error) { alert( "Please copy the selected link manually." ); } } /* ========================================================= OPEN TINYURL ========================================================= */ function shortenLink() { const link = document .getElementById("generatedLink") .value; if (!link) { alert( "Please generate an invoice first." ); return; } /* Copy invoice link automatically */ const input = document .getElementById("generatedLink"); input.focus(); input.select(); input.setSelectionRange( 0, input.value.length ); try { document.execCommand("copy"); } catch (error) { // Manual copy still possible } /* Open TinyURL */ window.open( "https://tinyurl.com/", "_blank" ); } /* ========================================================= SEND ON WHATSAPP ========================================================= */ function sendWhatsApp() { const link = document .getElementById("generatedLink") .value; const name = document .getElementById("customerName") .value .trim(); const invoice = document .getElementById("invoiceNumber") .value .trim() .toUpperCase(); if (!link) { alert( "Please generate an invoice first." ); return; } /* WhatsApp message */ const message = "Hi " + formatName(name) + ",\n\n" + "Please find your Belly Free Nation invoice here:\n" + link + "\n\n" + "Invoice: " + invoice + "\n\n" + "Thank you!"; const whatsappURL = "https://wa.me/?text=" + encodeURIComponent( message ); window.open( whatsappURL, "_blank" ); } </script> </body> </html>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+   content="width=device-width, initial-scale=1.0">
+
+<title>Belly Free Nation | Invoice Generator</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f5f1;
+    color: #252525;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.box {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin: 0;
+    color: #174A35;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    margin-top: 8px;
+    margin-bottom: 30px;
+    color: #777;
+    font-size: 14px;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    font-size: 12px;
+    color: #666;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #174A35;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.generate-button {
+    width: 100%;
+    margin-top: 28px;
+    padding: 15px;
+    background: #174A35;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.generate-button:hover {
+    background: #0f3928;
+}
+
+.result {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f5f8f4;
+    border: 1px solid #dfe8df;
+    border-radius: 10px;
+}
+
+.result-title {
+    color: #174A35;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.link-input {
+    background: #ffffff;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.action-button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.copy-button {
+    background: #174A35;
+    color: #ffffff;
+    border: none;
+}
+
+.shorten-button {
+    background: #ffffff;
+    color: #174A35;
+    border: 1px solid #174A35;
+}
+
+.open-button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px;
+    background: #ffffff;
+    color: #174A35;
+    border: 1px solid #174A35;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+.whatsapp-button {
+    background: #25D366;
+    color: #ffffff;
+    border: none;
+}
+
+.success {
+    display: none;
+    margin-top: 12px;
+    color: #174A35;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.preview {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.preview strong {
+    color: #174A35;
+}
+
+.instructions {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fffaf0;
+    border: 1px solid #eee1c5;
+    border-radius: 8px;
+    color: #665a43;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        margin: 15px auto;
+        padding: 10px;
+    }
+
+    .box {
+        padding: 25px 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="box">
+
+<h1>
+    BELLY FREE NATION
+</h1>
+
+<div class="subtitle">
+    Invoice Generator
+</div>
+
+<!-- CUSTOMER NAME -->
+
+<label>
+    Customer Name
+</label>
+
+<input
+type="text"
+id="customerName"
+placeholder="e.g. Sushma Reddy"
+
+>
+
+<!-- INVOICE NUMBER -->
+
+<label>
+    Invoice Number
+</label>
+
+<input
+type="text"
+id="invoiceNumber"
+placeholder="e.g. BFN-112"
+
+>
+
+<!-- AMOUNT -->
+
+<label>
+    Amount
+</label>
+
+<input
+type="text"
+id="amount"
+placeholder="e.g. 5000"
+
+>
+
+<!-- BILLING PERIOD -->
+
+<label>
+    Billing Period
+</label>
+
+<input
+type="text"
+id="billingPeriod"
+placeholder="e.g. Oct 1 - Oct 10, 2026"
+
+>
+
+<!-- INVOICE DATE -->
+
+<label>
+    Invoice Date
+</label>
+
+<input
+type="text"
+id="invoiceDate"
+placeholder="e.g. Oct 1, 2026"
+
+>
+
+<!-- GENERATE -->
+
+<button
+ type="button"
+ class="generate-button"
+ onclick="generateInvoice()">
+
+```
+GENERATE INVOICE LINK
+```
+
+</button>
+
+<!-- PREVIEW -->
+
+<div
+    class="preview"
+    id="preview">
+
+```
+<strong>
+    Invoice Preview
+</strong>
+
+<br>
+
+Customer:
+<span id="previewName"></span>
+
+<br>
+
+Invoice:
+<span id="previewInvoice"></span>
+
+<br>
+
+Amount: ₹
+<span id="previewAmount"></span>
+
+<br>
+
+Period:
+<span id="previewPeriod"></span>
+
+<br>
+
+Date:
+<span id="previewDate"></span>
+```
+
+</div>
+
+<!-- RESULT -->
+
+<div
+    class="result"
+    id="result">
+
+```
+<div class="result-title">
+    Customer Invoice Link
+</div>
+
+
+<input
+    type="text"
+    id="generatedLink"
+    class="link-input"
+    readonly
+>
+
+
+<!-- COPY -->
+
+<button
+    type="button"
+    class="action-button copy-button"
+    onclick="copyLink()">
+
+    COPY LINK
+
+</button>
+
+
+<!-- OPEN -->
+
+<a
+    href="#"
+    id="openInvoice"
+    class="open-button">
+
+    OPEN INVOICE
+
+</a>
+
+
+<!-- SHORTEN -->
+
+<button
+    type="button"
+    class="action-button shorten-button"
+    onclick="shortenLink()">
+
+    SHORTEN LINK WITH TINYURL
+
+</button>
+
+
+<!-- WHATSAPP -->
+
+<button
+    type="button"
+    class="action-button whatsapp-button"
+    onclick="sendWhatsApp()">
+
+    SEND ON WHATSAPP
+
+</button>
+
+
+<div
+    class="success"
+    id="success">
+
+    ✓ Link copied successfully!
+
+</div>
+
+
+<div class="instructions">
+
+    <strong>
+        Short link:
+    </strong>
+
+    <br>
+
+    Click "SHORTEN LINK WITH TINYURL".
+
+    <br><br>
+
+    The invoice link will be copied automatically.
+
+    <br><br>
+
+    Paste it into TinyURL and create your short link.
+
+</div>
+```
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+
+/* =========================================================
+   FORMAT CUSTOMER NAME
+   ========================================================= */
+
+function formatName(name) {
+
+    return name
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase()
+        .split(" ")
+        .map(function(word) {
+
+            if (!word) {
+                return "";
+            }
+
+            return word.charAt(0).toUpperCase()
+                   + word.slice(1);
+
+        })
+        .join(" ");
+
+}
+
+
+/* =========================================================
+   FORMAT MONTH
+   ========================================================= */
+
+function formatMonth(month) {
+
+    const months = {
+
+        jan: "Jan",
+        january: "Jan",
+
+        feb: "Feb",
+        february: "Feb",
+
+        mar: "Mar",
+        march: "Mar",
+
+        apr: "Apr",
+        april: "Apr",
+
+        may: "May",
+
+        jun: "Jun",
+        june: "Jun",
+
+        jul: "Jul",
+        july: "Jul",
+
+        aug: "Aug",
+        august: "Aug",
+
+        sep: "Sep",
+        sept: "Sep",
+        september: "Sep",
+
+        oct: "Oct",
+        october: "Oct",
+
+        nov: "Nov",
+        november: "Nov",
+
+        dec: "Dec",
+        december: "Dec"
+
+    };
+
+    const key = month
+        .trim()
+        .toLowerCase();
+
+    return months[key] || month;
+
+}
+
+
+/* =========================================================
+   FORMAT ONE DATE
+   ========================================================= */
+
+function formatDate(dateText) {
+
+    let text = dateText
+        .trim()
+        .replace(/\s+/g, " ")
+        .replace(/\//g, "-")
+        .replace(/\s*,\s*/g, ", ")
+        .trim();
+
+
+    /* MONTH + YEAR */
+
+    let monthYear = text.match(
+        /^([A-Za-z]+)\s+(\d{4})$/i
+    );
+
+    if (monthYear) {
+
+        const month =
+            formatMonth(monthYear[1]);
+
+        const year =
+            monthYear[2];
+
+        return month + " " + year;
+
+    }
+
+
+    /* MONTH + DAY + YEAR */
+
+    let fullDate = text.match(
+        /^([A-Za-z]+)\s+(\d{1,2})(?:\s*,?\s*(\d{4}))?$/i
+    );
+
+    if (fullDate) {
+
+        const month =
+            formatMonth(fullDate[1]);
+
+        const day =
+            Number(fullDate[2]);
+
+        const year =
+            fullDate[3]
+            ? fullDate[3]
+            : "";
+
+        return (
+            month +
+            " " +
+            day +
+            (
+                year
+                ? ", " + year
+                : ""
+            )
+        );
+
+    }
+
+
+    /* DAY + MONTH + YEAR */
+
+    let dayMonthYear = text.match(
+        /^(\d{1,2})\s+([A-Za-z]+)(?:\s*,?\s*(\d{4}))?$/i
+    );
+
+    if (dayMonthYear) {
+
+        const day =
+            Number(dayMonthYear[1]);
+
+        const month =
+            formatMonth(dayMonthYear[2]);
+
+        const year =
+            dayMonthYear[3]
+            ? dayMonthYear[3]
+            : "";
+
+        return (
+            month +
+            " " +
+            day +
+            (
+                year
+                ? ", " + year
+                : ""
+            )
+        );
+
+    }
+
+
+    return text;
+
+}
+
+
+/* =========================================================
+   FORMAT BILLING PERIOD
+   ========================================================= */
+
+function formatPeriod(periodText) {
+
+    let text = periodText
+        .trim()
+        .replace(/\s+/g, " ");
+
+
+    text = text.replace(
+        /[–—]/g,
+        "-"
+    );
+
+
+    const parts =
+        text.split("-");
+
+
+    if (parts.length === 1) {
+
+        return formatDate(parts[0]);
+
+    }
+
+
+    let start =
+        parts[0].trim();
+
+    let end =
+        parts.slice(1)
+        .join("-")
+        .trim();
+
+
+    const yearMatch =
+        text.match(/\b(20\d{2})\b/);
+
+
+    const year =
+        yearMatch
+        ? yearMatch[1]
+        : new Date().getFullYear();
+
+
+    start = start
+        .replace(/\b20\d{2}\b/g, "")
+        .trim()
+        .replace(/,\s*$/, "");
+
+
+    end = end
+        .replace(/\b20\d{2}\b/g, "")
+        .trim()
+        .replace(/,\s*$/, "");
+
+
+    let formattedStart =
+        formatDate(start);
+
+
+    let formattedEnd =
+        formatDate(end);
+
+
+    formattedEnd =
+        formattedEnd +
+        ", " +
+        year;
+
+
+    return (
+        formattedStart +
+        " - " +
+        formattedEnd
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT AMOUNT
+   ========================================================= */
+
+function formatAmount(amount) {
+
+    const clean =
+        amount
+        .replace(/,/g, "")
+        .replace(/₹/g, "")
+        .trim();
+
+
+    const number =
+        Number(clean);
+
+
+    if (isNaN(number)) {
+
+        return clean;
+
+    }
+
+
+    return number
+        .toLocaleString("en-IN");
+
+}
+
+
+/* =========================================================
+   GENERATE INVOICE LINK
+   ========================================================= */
+
+function generateInvoice() {
+
+
+    const rawName =
+        document
+        .getElementById("customerName")
+        .value;
+
+
+    const rawInvoice =
+        document
+        .getElementById("invoiceNumber")
+        .value;
+
+
+    const rawAmount =
+        document
+        .getElementById("amount")
+        .value;
+
+
+    const rawPeriod =
+        document
+        .getElementById("billingPeriod")
+        .value;
+
+
+    const rawDate =
+        document
+        .getElementById("invoiceDate")
+        .value;
+
+
+    /* CHECK FIELDS */
+
+    if (
+        !rawName.trim() ||
+        !rawInvoice.trim() ||
+        !rawAmount.trim() ||
+        !rawPeriod.trim() ||
+        !rawDate.trim()
+    ) {
+
+        alert(
+            "Please fill in all fields."
+        );
+
+        return;
+
+    }
+
+
+    /* STANDARDIZE */
+
+    const name =
+        formatName(rawName);
+
+
+    const invoice =
+        rawInvoice
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+
+    const amount =
+        rawAmount
+        .replace(/,/g, "")
+        .replace(/₹/g, "")
+        .trim();
+
+
+    const period =
+        formatPeriod(rawPeriod);
+
+
+    const date =
+        formatDate(rawDate);
+
+
+    /* CREATE DATA */
+
+    const invoiceData = {
+
+        name: name,
+
+        invoice: invoice,
+
+        amount: amount,
+
+        period: period,
+
+        date: date
+
+    };
+
+
+    /*
+    ========================================================
+    IMPORTANT
+
+    NO BASE64 IS USED.
+
+    This is the new reliable URL format.
+    ========================================================
+    */
+
+    const encoded =
+        encodeURIComponent(
+            JSON.stringify(invoiceData)
+        );
+
+
+    /*
+    CREATE CUSTOMER INVOICE URL
+    */
+
+    const customerLink =
+        window.location.origin +
+        window.location.pathname
+        .replace(
+            "invoice-generator.html",
+            "customer-invoice.html"
+        ) +
+        "#" +
+        encoded;
+
+
+    /* PREVIEW */
+
+    document
+        .getElementById("previewName")
+        .textContent =
+            name;
+
+
+    document
+        .getElementById("previewInvoice")
+        .textContent =
+            invoice;
+
+
+    document
+        .getElementById("previewAmount")
+        .textContent =
+            formatAmount(amount);
+
+
+    document
+        .getElementById("previewPeriod")
+        .textContent =
+            period;
+
+
+    document
+        .getElementById("previewDate")
+        .textContent =
+            date;
+
+
+    document
+        .getElementById("preview")
+        .style.display =
+            "block";
+
+
+    /* GENERATED LINK */
+
+    document
+        .getElementById("generatedLink")
+        .value =
+            customerLink;
+
+
+    /* OPEN BUTTON */
+
+    document
+        .getElementById("openInvoice")
+        .href =
+            customerLink;
+
+
+    /* SHOW RESULT */
+
+    document
+        .getElementById("result")
+        .style.display =
+            "block";
+
+
+    document
+        .getElementById("success")
+        .style.display =
+            "none";
+
+}
+
+
+/* =========================================================
+   COPY LINK
+   ========================================================= */
+
+function copyLink() {
+
+    const link =
+        document
+        .getElementById("generatedLink");
+
+
+    link.focus();
+
+    link.select();
+
+    link.setSelectionRange(
+        0,
+        link.value.length
+    );
+
+
+    try {
+
+        document.execCommand("copy");
+
+        document
+            .getElementById("success")
+            .style.display =
+                "block";
+
+    }
+
+    catch (error) {
+
+        alert(
+            "Please copy the selected link manually."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TINYURL
+   ========================================================= */
+
+function shortenLink() {
+
+    const link =
+        document
+        .getElementById("generatedLink")
+        .value;
+
+
+    if (!link) {
+
+        alert(
+            "Please generate an invoice first."
+        );
+
+        return;
+
+    }
+
+
+    const input =
+        document
+        .getElementById("generatedLink");
+
+
+    input.focus();
+
+    input.select();
+
+    input.setSelectionRange(
+        0,
+        input.value.length
+    );
+
+
+    try {
+
+        document.execCommand("copy");
+
+    }
+
+    catch (error) {
+
+        /* Manual copy still possible */
+
+    }
+
+
+    window.open(
+        "https://tinyurl.com/",
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+
+function sendWhatsApp() {
+
+    const link =
+        document
+        .getElementById("generatedLink")
+        .value;
+
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+
+    const invoice =
+        document
+        .getElementById("invoiceNumber")
+        .value
+        .trim()
+        .toUpperCase();
+
+
+    if (!link) {
+
+        alert(
+            "Please generate an invoice first."
+        );
+
+        return;
+
+    }
+
+
+    const message =
+        "Hi " +
+        formatName(name) +
+        ",\n\n" +
+
+        "Please find your Belly Free Nation invoice here:\n" +
+        link +
+        "\n\n" +
+
+        "Invoice: " +
+        invoice +
+        "\n\n" +
+
+        "Thank you!";
+
+
+    const whatsappURL =
+        "https://wa.me/?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

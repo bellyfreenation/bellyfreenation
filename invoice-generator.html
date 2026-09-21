@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-   content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Belly Free Nation | Invoice Generator</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -194,7 +188,6 @@ button {
 }
 
 @media (max-width: 600px) {
-
     .container {
         margin: 15px auto;
         padding: 10px;
@@ -203,9 +196,7 @@ button {
     .box {
         padding: 25px 20px;
     }
-
 }
-
 </style>
 
 </head>
@@ -213,23 +204,15 @@ button {
 <body>
 
 <div class="container">
-
 <div class="box">
 
-<h1>
-    BELLY FREE NATION
-</h1>
+<h1>BELLY FREE NATION</h1>
 
 <div class="subtitle">
-    Invoice Generator
+Invoice Generator
 </div>
 
-<!-- CUSTOMER NAME -->
-
-<label>
-    Customer Name
-</label>
-
+<label>Customer Name</label>
 <input
 type="text"
 id="customerName"
@@ -237,12 +220,7 @@ placeholder="e.g. Sushma Reddy"
 
 >
 
-<!-- INVOICE NUMBER -->
-
-<label>
-    Invoice Number
-</label>
-
+<label>Invoice Number</label>
 <input
 type="text"
 id="invoiceNumber"
@@ -250,12 +228,7 @@ placeholder="e.g. BFN-112"
 
 >
 
-<!-- AMOUNT -->
-
-<label>
-    Amount
-</label>
-
+<label>Amount</label>
 <input
 type="text"
 id="amount"
@@ -263,12 +236,7 @@ placeholder="e.g. 5000"
 
 >
 
-<!-- BILLING PERIOD -->
-
-<label>
-    Billing Period
-</label>
-
+<label>Billing Period</label>
 <input
 type="text"
 id="billingPeriod"
@@ -276,12 +244,7 @@ placeholder="e.g. Oct 1 - Oct 10, 2026"
 
 >
 
-<!-- INVOICE DATE -->
-
-<label>
-    Invoice Date
-</label>
-
+<label>Invoice Date</label>
 <input
 type="text"
 id="invoiceDate"
@@ -289,29 +252,23 @@ placeholder="e.g. Oct 1, 2026"
 
 >
 
-<!-- GENERATE -->
-
 <button
- type="button"
- class="generate-button"
- onclick="generateInvoice()">
+type="button"
+class="generate-button"
+onclick="generateInvoice()"
 
+>
 
+```
 GENERATE INVOICE LINK
-
+```
 
 </button>
 
-<!-- PREVIEW -->
+<div class="preview" id="preview">
 
-<div
-    class="preview"
-    id="preview">
-
-
-<strong>
-    Invoice Preview
-</strong>
+```
+<strong>Invoice Preview</strong>
 
 <br>
 
@@ -325,8 +282,8 @@ Invoice:
 
 <br>
 
-Amount: ₹
-<span id="previewAmount"></span>
+Amount:
+₹<span id="previewAmount"></span>
 
 <br>
 
@@ -337,21 +294,16 @@ Period:
 
 Date:
 <span id="previewDate"></span>
-
+```
 
 </div>
 
-<!-- RESULT -->
+<div class="result" id="result">
 
-<div
-    class="result"
-    id="result">
-
-
+```
 <div class="result-title">
     Customer Invoice Link
 </div>
-
 
 <input
     type="text"
@@ -360,178 +312,105 @@ Date:
     readonly
 >
 
-
-<!-- COPY -->
-
 <button
     type="button"
     class="action-button copy-button"
-    onclick="copyLink()">
-
+    onclick="copyLink()"
+>
     COPY LINK
-
 </button>
-
-
-<!-- OPEN -->
 
 <a
     href="#"
     id="openInvoice"
-    class="open-button">
-
+    class="open-button"
+>
     OPEN INVOICE
-
 </a>
-
-
-<!-- SHORTEN -->
 
 <button
     type="button"
     class="action-button shorten-button"
-    onclick="shortenLink()">
-
+    onclick="shortenLink()"
+>
     SHORTEN LINK WITH TINYURL
-
 </button>
-
-
-<!-- WHATSAPP -->
 
 <button
     type="button"
     class="action-button whatsapp-button"
-    onclick="sendWhatsApp()">
-
+    onclick="sendWhatsApp()"
+>
     SEND ON WHATSAPP
-
 </button>
 
-
-<div
-    class="success"
-    id="success">
-
-    ✓ Link copied successfully!
-
+<div class="success" id="success">
+    Link copied successfully!
 </div>
-
 
 <div class="instructions">
-
-    <strong>
-        Short link:
-    </strong>
-
+    <strong>Short link:</strong>
     <br>
-
     Click "SHORTEN LINK WITH TINYURL".
-
-    <br><br>
-
     The invoice link will be copied automatically.
-
     <br><br>
-
     Paste it into TinyURL and create your short link.
+</div>
+```
 
 </div>
 
-
 </div>
-
-</div>
-
 </div>
 
 <script>
 
-
-/* =========================================================
-   FORMAT CUSTOMER NAME
-   ========================================================= */
-
 function formatName(name) {
-
     return name
         .trim()
         .replace(/\s+/g, " ")
         .toLowerCase()
         .split(" ")
         .map(function(word) {
-
-            if (!word) {
-                return "";
-            }
-
-            return word.charAt(0).toUpperCase()
-                   + word.slice(1);
-
+            if (!word) return "";
+            return word.charAt(0).toUpperCase() + word.slice(1);
         })
         .join(" ");
-
 }
-
-
-/* =========================================================
-   FORMAT MONTH
-   ========================================================= */
 
 function formatMonth(month) {
 
     const months = {
-
         jan: "Jan",
         january: "Jan",
-
         feb: "Feb",
         february: "Feb",
-
         mar: "Mar",
         march: "Mar",
-
         apr: "Apr",
         april: "Apr",
-
         may: "May",
-
         jun: "Jun",
         june: "Jun",
-
         jul: "Jul",
         july: "Jul",
-
         aug: "Aug",
         august: "Aug",
-
         sep: "Sep",
         sept: "Sep",
         september: "Sep",
-
         oct: "Oct",
         october: "Oct",
-
         nov: "Nov",
         november: "Nov",
-
         dec: "Dec",
         december: "Dec"
-
     };
 
-    const key = month
-        .trim()
-        .toLowerCase();
+    const key = month.trim().toLowerCase();
 
     return months[key] || month;
-
 }
-
-
-/* =========================================================
-   FORMAT ONE DATE
-   ========================================================= */
 
 function formatDate(dateText) {
 
@@ -539,250 +418,121 @@ function formatDate(dateText) {
         .trim()
         .replace(/\s+/g, " ")
         .replace(/\//g, "-")
-        .replace(/\s*,\s*/g, ", ")
-        .trim();
+        .replace(/\s*,\s*/g, ", ");
 
-
-    /* MONTH + YEAR */
-
-    let monthYear = text.match(
-        /^([A-Za-z]+)\s+(\d{4})$/i
-    );
-
-    if (monthYear) {
-
-        const month =
-            formatMonth(monthYear[1]);
-
-        const year =
-            monthYear[2];
-
-        return month + " " + year;
-
-    }
-
-
-    /* MONTH + DAY + YEAR */
-
-    let fullDate = text.match(
+    let match = text.match(
         /^([A-Za-z]+)\s+(\d{1,2})(?:\s*,?\s*(\d{4}))?$/i
     );
 
-    if (fullDate) {
+    if (match) {
 
-        const month =
-            formatMonth(fullDate[1]);
+        const month = formatMonth(match[1]);
+        const day = Number(match[2]);
+        const year = match[3] || "";
 
-        const day =
-            Number(fullDate[2]);
-
-        const year =
-            fullDate[3]
-            ? fullDate[3]
-            : "";
-
-        return (
-            month +
-            " " +
-            day +
-            (
-                year
-                ? ", " + year
-                : ""
-            )
-        );
-
+        return month + " " + day + (year ? ", " + year : "");
     }
 
-
-    /* DAY + MONTH + YEAR */
-
-    let dayMonthYear = text.match(
+    match = text.match(
         /^(\d{1,2})\s+([A-Za-z]+)(?:\s*,?\s*(\d{4}))?$/i
     );
 
-    if (dayMonthYear) {
+    if (match) {
 
-        const day =
-            Number(dayMonthYear[1]);
+        const day = Number(match[1]);
+        const month = formatMonth(match[2]);
+        const year = match[3] || "";
 
-        const month =
-            formatMonth(dayMonthYear[2]);
-
-        const year =
-            dayMonthYear[3]
-            ? dayMonthYear[3]
-            : "";
-
-        return (
-            month +
-            " " +
-            day +
-            (
-                year
-                ? ", " + year
-                : ""
-            )
-        );
-
+        return month + " " + day + (year ? ", " + year : "");
     }
 
+    match = text.match(
+        /^([A-Za-z]+)\s+(\d{4})$/i
+    );
+
+    if (match) {
+        return formatMonth(match[1]) + " " + match[2];
+    }
 
     return text;
-
 }
-
-
-/* =========================================================
-   FORMAT BILLING PERIOD
-   ========================================================= */
 
 function formatPeriod(periodText) {
 
     let text = periodText
         .trim()
-        .replace(/\s+/g, " ");
+        .replace(/\s+/g, " ")
+        .replace(/[–—]/g, "-");
 
-
-    text = text.replace(
-        /[–—]/g,
-        "-"
-    );
-
-
-    const parts =
-        text.split("-");
-
+    const parts = text.split("-");
 
     if (parts.length === 1) {
-
         return formatDate(parts[0]);
-
     }
 
+    let start = parts[0].trim();
 
-    let start =
-        parts[0].trim();
+    let end = parts.slice(1).join("-").trim();
 
-    let end =
-        parts.slice(1)
-        .join("-")
-        .trim();
+    const yearMatch = text.match(/\b(20\d{2})\b/);
 
-
-    const yearMatch =
-        text.match(/\b(20\d{2})\b/);
-
-
-    const year =
-        yearMatch
+    const year = yearMatch
         ? yearMatch[1]
         : new Date().getFullYear();
-
 
     start = start
         .replace(/\b20\d{2}\b/g, "")
         .trim()
         .replace(/,\s*$/, "");
 
-
     end = end
         .replace(/\b20\d{2}\b/g, "")
         .trim()
         .replace(/,\s*$/, "");
 
+    const formattedStart = formatDate(start);
 
-    let formattedStart =
-        formatDate(start);
+    let formattedEnd = formatDate(end);
 
+    if (!/\b20\d{2}\b/.test(formattedEnd)) {
+        formattedEnd += ", " + year;
+    }
 
-    let formattedEnd =
-        formatDate(end);
-
-
-    formattedEnd =
-        formattedEnd +
-        ", " +
-        year;
-
-
-    return (
-        formattedStart +
-        " - " +
-        formattedEnd
-    );
-
+    return formattedStart + " - " + formattedEnd;
 }
-
-
-/* =========================================================
-   FORMAT AMOUNT
-   ========================================================= */
 
 function formatAmount(amount) {
 
-    const clean =
-        amount
+    const clean = amount
         .replace(/,/g, "")
         .replace(/₹/g, "")
         .trim();
 
-
-    const number =
-        Number(clean);
-
+    const number = Number(clean);
 
     if (isNaN(number)) {
-
         return clean;
-
     }
 
-
-    return number
-        .toLocaleString("en-IN");
-
+    return number.toLocaleString("en-IN");
 }
-
-
-/* =========================================================
-   GENERATE INVOICE LINK
-   ========================================================= */
 
 function generateInvoice() {
 
-
     const rawName =
-        document
-        .getElementById("customerName")
-        .value;
-
+        document.getElementById("customerName").value;
 
     const rawInvoice =
-        document
-        .getElementById("invoiceNumber")
-        .value;
-
+        document.getElementById("invoiceNumber").value;
 
     const rawAmount =
-        document
-        .getElementById("amount")
-        .value;
-
+        document.getElementById("amount").value;
 
     const rawPeriod =
-        document
-        .getElementById("billingPeriod")
-        .value;
-
+        document.getElementById("billingPeriod").value;
 
     const rawDate =
-        document
-        .getElementById("invoiceDate")
-        .value;
-
-
-    /* CHECK FIELDS */
+        document.getElementById("invoiceDate").value;
 
     if (
         !rawName.trim() ||
@@ -791,332 +541,186 @@ function generateInvoice() {
         !rawPeriod.trim() ||
         !rawDate.trim()
     ) {
-
-        alert(
-            "Please fill in all fields."
-        );
-
+        alert("Please fill in all fields.");
         return;
-
     }
 
+    const name = formatName(rawName);
 
-    /* STANDARDIZE */
-
-    const name =
-        formatName(rawName);
-
-
-    const invoice =
-        rawInvoice
+    const invoice = rawInvoice
         .trim()
         .toUpperCase()
         .replace(/\s+/g, "");
 
-
-    const amount =
-        rawAmount
+    const amount = rawAmount
         .replace(/,/g, "")
         .replace(/₹/g, "")
         .trim();
 
+    const period = formatPeriod(rawPeriod);
 
-    const period =
-        formatPeriod(rawPeriod);
-
-
-    const date =
-        formatDate(rawDate);
-
-
-    /* CREATE DATA */
+    const date = formatDate(rawDate);
 
     const invoiceData = {
-
         name: name,
-
         invoice: invoice,
-
         amount: amount,
-
         period: period,
-
         date: date
-
     };
 
+    const json = JSON.stringify(invoiceData);
 
-    /*
-    ========================================================
-    IMPORTANT
+    const encoded = encodeURIComponent(json);
 
-    NO BASE64 IS USED.
-
-    This is the new reliable URL format.
-    ========================================================
-    */
-
-    const encoded =
-        encodeURIComponent(
-            JSON.stringify(invoiceData)
+    const basePath =
+        window.location.origin +
+        window.location.pathname.replace(
+            "invoice-generator.html",
+            ""
         );
 
-
-    /*
-    CREATE CUSTOMER INVOICE URL
-    */
-
     const customerLink =
-        window.location.origin +
-        window.location.pathname
-        .replace(
-            "invoice-generator.html",
-            "customer-invoice.html"
-        ) +
-        "#" +
+        basePath +
+        "customer-invoice.html#" +
         encoded;
 
+    document.getElementById("previewName").textContent = name;
 
-    /* PREVIEW */
+    document.getElementById("previewInvoice").textContent = invoice;
 
-    document
-        .getElementById("previewName")
-        .textContent =
-            name;
+    document.getElementById("previewAmount").textContent =
+        formatAmount(amount);
 
+    document.getElementById("previewPeriod").textContent = period;
 
-    document
-        .getElementById("previewInvoice")
-        .textContent =
-            invoice;
+    document.getElementById("previewDate").textContent = date;
 
+    document.getElementById("preview").style.display = "block";
 
-    document
-        .getElementById("previewAmount")
-        .textContent =
-            formatAmount(amount);
+    document.getElementById("generatedLink").value =
+        customerLink;
 
+    document.getElementById("openInvoice").href =
+        customerLink;
 
-    document
-        .getElementById("previewPeriod")
-        .textContent =
-            period;
+    document.getElementById("result").style.display = "block";
 
-
-    document
-        .getElementById("previewDate")
-        .textContent =
-            date;
-
-
-    document
-        .getElementById("preview")
-        .style.display =
-            "block";
-
-
-    /* GENERATED LINK */
-
-    document
-        .getElementById("generatedLink")
-        .value =
-            customerLink;
-
-
-    /* OPEN BUTTON */
-
-    document
-        .getElementById("openInvoice")
-        .href =
-            customerLink;
-
-
-    /* SHOW RESULT */
-
-    document
-        .getElementById("result")
-        .style.display =
-            "block";
-
-
-    document
-        .getElementById("success")
-        .style.display =
-            "none";
-
+    document.getElementById("success").style.display = "none";
 }
-
-
-/* =========================================================
-   COPY LINK
-   ========================================================= */
 
 function copyLink() {
 
     const link =
-        document
-        .getElementById("generatedLink");
-
+        document.getElementById("generatedLink");
 
     link.focus();
-
     link.select();
-
-    link.setSelectionRange(
-        0,
-        link.value.length
-    );
-
+    link.setSelectionRange(0, link.value.length);
 
     try {
 
-        document.execCommand("copy");
+        navigator.clipboard.writeText(link.value)
+            .then(function() {
 
-        document
-            .getElementById("success")
-            .style.display =
-                "block";
+                document.getElementById("success").style.display =
+                    "block";
 
+            })
+            .catch(function() {
+
+                document.execCommand("copy");
+
+                document.getElementById("success").style.display =
+                    "block";
+
+            });
+
+    } catch (error) {
+
+        try {
+            document.execCommand("copy");
+        } catch (e) {}
+
+        alert("Please copy the selected link manually.");
     }
-
-    catch (error) {
-
-        alert(
-            "Please copy the selected link manually."
-        );
-
-    }
-
 }
-
-
-/* =========================================================
-   TINYURL
-   ========================================================= */
 
 function shortenLink() {
 
     const link =
-        document
-        .getElementById("generatedLink")
-        .value;
-
+        document.getElementById("generatedLink").value;
 
     if (!link) {
 
-        alert(
-            "Please generate an invoice first."
-        );
-
+        alert("Please generate an invoice first.");
         return;
-
     }
-
 
     const input =
-        document
-        .getElementById("generatedLink");
-
+        document.getElementById("generatedLink");
 
     input.focus();
-
     input.select();
-
-    input.setSelectionRange(
-        0,
-        input.value.length
-    );
-
+    input.setSelectionRange(0, input.value.length);
 
     try {
-
-        document.execCommand("copy");
-
+        navigator.clipboard.writeText(link);
+    } catch (error) {
+        try {
+            document.execCommand("copy");
+        } catch (e) {}
     }
-
-    catch (error) {
-
-        /* Manual copy still possible */
-
-    }
-
 
     window.open(
         "https://tinyurl.com/",
         "_blank"
     );
-
 }
-
-
-/* =========================================================
-   WHATSAPP
-   ========================================================= */
 
 function sendWhatsApp() {
 
     const link =
-        document
-        .getElementById("generatedLink")
-        .value;
-
+        document.getElementById("generatedLink").value;
 
     const name =
-        document
-        .getElementById("customerName")
-        .value
-        .trim();
-
+        document.getElementById("customerName").value.trim();
 
     const invoice =
-        document
-        .getElementById("invoiceNumber")
+        document.getElementById("invoiceNumber")
         .value
         .trim()
         .toUpperCase();
 
-
     if (!link) {
 
-        alert(
-            "Please generate an invoice first."
-        );
-
+        alert("Please generate an invoice first.");
         return;
-
     }
-
 
     const message =
         "Hi " +
         formatName(name) +
         ",\n\n" +
-
         "Please find your Belly Free Nation invoice here:\n" +
         link +
         "\n\n" +
-
         "Invoice: " +
         invoice +
         "\n\n" +
-
         "Thank you!";
-
 
     const whatsappURL =
         "https://wa.me/?text=" +
         encodeURIComponent(message);
 
-
     window.open(
         whatsappURL,
         "_blank"
     );
-
 }
 
 </script>
 
 </body>
-
 </html>

@@ -1,10 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Belly Free Nation | Invoice Generator</title>
@@ -205,7 +204,6 @@ button {
 }
 
 </style>
-
 </head>
 
 <body>
@@ -215,18 +213,18 @@ button {
 <div class="box">
 
 <h1>
-BELLY FREE NATION
+    BELLY FREE NATION
 </h1>
 
 <div class="subtitle">
-Invoice Generator
+    Invoice Generator
 </div>
 
 
 <!-- CUSTOMER NAME -->
 
 <label>
-Customer Name
+    Customer Name
 </label>
 
 <input
@@ -239,7 +237,7 @@ Customer Name
 <!-- INVOICE NUMBER -->
 
 <label>
-Invoice Number
+    Invoice Number
 </label>
 
 <input
@@ -252,7 +250,7 @@ Invoice Number
 <!-- AMOUNT -->
 
 <label>
-Amount
+    Amount
 </label>
 
 <input
@@ -265,7 +263,7 @@ Amount
 <!-- BILLING PERIOD -->
 
 <label>
-Billing Period
+    Billing Period
 </label>
 
 <input
@@ -278,7 +276,7 @@ Billing Period
 <!-- INVOICE DATE -->
 
 <label>
-Invoice Date
+    Invoice Date
 </label>
 
 <input
@@ -291,6 +289,7 @@ Invoice Date
 <!-- GENERATE -->
 
 <button
+    type="button"
     class="generate-button"
     onclick="generateInvoice()">
 
@@ -312,31 +311,26 @@ Invoice Date
     <br>
 
     Customer:
-
     <span id="previewName"></span>
 
     <br>
 
     Invoice:
-
     <span id="previewInvoice"></span>
 
     <br>
 
     Amount:
-
     ₹<span id="previewAmount"></span>
 
     <br>
 
     Period:
-
     <span id="previewPeriod"></span>
 
     <br>
 
     Date:
-
     <span id="previewDate"></span>
 
 </div>
@@ -363,6 +357,7 @@ Invoice Date
     <!-- COPY -->
 
     <button
+        type="button"
         class="action-button copy-button"
         onclick="copyLink()">
 
@@ -386,6 +381,7 @@ Invoice Date
     <!-- SHORTEN -->
 
     <button
+        type="button"
         class="action-button shorten-button"
         onclick="shortenLink()">
 
@@ -397,6 +393,7 @@ Invoice Date
     <!-- WHATSAPP -->
 
     <button
+        type="button"
         class="action-button whatsapp-button"
         onclick="sendWhatsApp()">
 
@@ -424,6 +421,8 @@ Invoice Date
 
         Click "SHORTEN LINK WITH TINYURL".
 
+        <br><br>
+
         The invoice link will be copied automatically.
 
         <br><br>
@@ -440,7 +439,6 @@ Invoice Date
 
 
 <script>
-
 
 /* =========================================================
    FORMAT CUSTOMER NAME
@@ -516,8 +514,8 @@ function formatMonth(month) {
 
     const key =
         month
-        .trim()
-        .toLowerCase();
+            .trim()
+            .toLowerCase();
 
     return months[key] || month;
 
@@ -533,23 +531,20 @@ function formatDate(dateText) {
     let text = dateText
         .trim()
         .replace(/\s+/g, " ")
-        .replace(/,/g, " , ");
-
-    text = text
+        .replace(/\//g, "-")
         .replace(/\s*,\s*/g, ", ")
         .trim();
 
 
     /*
-    MONTH + YEAR
+       MONTH + YEAR
 
-    Example:
-    oct 2022
-    OCT 2022
-    October 2022
+       Example:
+       Oct 2026
+       October 2026
 
-    Result:
-    Oct 2022
+       Result:
+       Oct 2026
     */
 
     let monthYear =
@@ -572,15 +567,15 @@ function formatDate(dateText) {
 
 
     /*
-    MONTH + DAY + YEAR
+       MONTH + DAY + YEAR
 
-    Examples:
-    oct 1 2022
-    oct 1, 2022
-    October 1 2022
+       Examples:
+       Oct 1 2026
+       Oct 1, 2026
+       October 1 2026
 
-    Result:
-    Oct 1, 2022
+       Result:
+       Oct 1, 2026
     */
 
     let fullDate =
@@ -599,9 +594,8 @@ function formatDate(dateText) {
 
         const year =
             fullDate[3]
-            ? fullDate[3]
-            : "";
-
+                ? fullDate[3]
+                : "";
 
         return (
             month +
@@ -609,8 +603,8 @@ function formatDate(dateText) {
             day +
             (
                 year
-                ? ", " + year
-                : ""
+                    ? ", " + year
+                    : ""
             )
         );
 
@@ -618,13 +612,13 @@ function formatDate(dateText) {
 
 
     /*
-    DAY + MONTH + YEAR
+       DAY + MONTH + YEAR
 
-    Example:
-    1 oct 2022
+       Example:
+       1 Oct 2026
 
-    Result:
-    Oct 1, 2022
+       Result:
+       Oct 1, 2026
     */
 
     let dayMonthYear =
@@ -643,67 +637,8 @@ function formatDate(dateText) {
 
         const year =
             dayMonthYear[3]
-            ? dayMonthYear[3]
-            : "";
-
-
-        return (
-            month +
-            " " +
-            day +
-            (
-                year
-                ? ", " + year
-                : ""
-            )
-        );
-
-    }
-
-
-    /*
-    If nothing matches,
-    return cleaned text instead of
-    changing what the user entered.
-    */
-
-    return text;
-
-}
-
-
-    text =
-        text.replace(/\//g, "-");
-
-
-    /*
-       Example:
-
-       oct 1
-       OCT 1
-       October 1
-       Oct 1, 2026
-    */
-
-    let match =
-        text.match(
-            /^([A-Za-z]+)\s+(\d{1,2})(?:\s*,?\s*(\d{4}))?$/i
-        );
-
-
-    if (match) {
-
-        const month =
-            formatMonth(match[1]);
-
-        const day =
-            Number(match[2]);
-
-        const year =
-            match[3]
-            ? match[3]
-            : "";
-
+                ? dayMonthYear[3]
+                : "";
 
         return (
             month +
@@ -711,13 +646,18 @@ function formatDate(dateText) {
             day +
             (
                 year
-                ? ", " + year
-                : ""
+                    ? ", " + year
+                    : ""
             )
         );
 
     }
 
+
+    /*
+       If nothing matches,
+       return cleaned text.
+    */
 
     return text;
 
@@ -732,9 +672,8 @@ function formatPeriod(periodText) {
 
     let text =
         periodText
-        .trim()
-        .replace(/\s+/g, " ");
-
+            .trim()
+            .replace(/\s+/g, " ");
 
     /*
        Convert different dash styles
@@ -769,8 +708,8 @@ function formatPeriod(periodText) {
 
     let end =
         parts.slice(1)
-        .join("-")
-        .trim();
+            .join("-")
+            .trim();
 
 
     /*
@@ -780,11 +719,10 @@ function formatPeriod(periodText) {
     const yearMatch =
         text.match(/\b(20\d{2})\b/);
 
-
     const year =
         yearMatch
-        ? yearMatch[1]
-        : new Date().getFullYear();
+            ? yearMatch[1]
+            : new Date().getFullYear();
 
 
     /*
@@ -793,16 +731,15 @@ function formatPeriod(periodText) {
 
     start =
         start
-        .replace(/\b20\d{2}\b/g, "")
-        .trim()
-        .replace(/,\s*$/, "");
-
+            .replace(/\b20\d{2}\b/g, "")
+            .trim()
+            .replace(/,\s*$/, "");
 
     end =
         end
-        .replace(/\b20\d{2}\b/g, "")
-        .trim()
-        .replace(/,\s*$/, "");
+            .replace(/\b20\d{2}\b/g, "")
+            .trim()
+            .replace(/,\s*$/, "");
 
 
     /*
@@ -843,21 +780,18 @@ function formatAmount(amount) {
 
     const clean =
         amount
-        .replace(/,/g, "")
-        .replace(/₹/g, "")
-        .trim();
-
+            .replace(/,/g, "")
+            .replace(/₹/g, "")
+            .trim();
 
     const number =
         Number(clean);
-
 
     if (isNaN(number)) {
 
         return clean;
 
     }
-
 
     return number
         .toLocaleString("en-IN");
@@ -871,39 +805,34 @@ function formatAmount(amount) {
 
 function generateInvoice() {
 
-
     /*
        Get values
     */
 
     const rawName =
         document
-        .getElementById("customerName")
-        .value;
-
+            .getElementById("customerName")
+            .value;
 
     const rawInvoice =
         document
-        .getElementById("invoiceNumber")
-        .value;
-
+            .getElementById("invoiceNumber")
+            .value;
 
     const rawAmount =
         document
-        .getElementById("amount")
-        .value;
-
+            .getElementById("amount")
+            .value;
 
     const rawPeriod =
         document
-        .getElementById("billingPeriod")
-        .value;
-
+            .getElementById("billingPeriod")
+            .value;
 
     const rawDate =
         document
-        .getElementById("invoiceDate")
-        .value;
+            .getElementById("invoiceDate")
+            .value;
 
 
     /*
@@ -934,24 +863,20 @@ function generateInvoice() {
     const name =
         formatName(rawName);
 
-
     const invoice =
         rawInvoice
-        .trim()
-        .toUpperCase()
-        .replace(/\s+/g, "");
-
+            .trim()
+            .toUpperCase()
+            .replace(/\s+/g, "");
 
     const amount =
         rawAmount
-        .replace(/,/g, "")
-        .replace(/₹/g, "")
-        .trim();
-
+            .replace(/,/g, "")
+            .replace(/₹/g, "")
+            .trim();
 
     const period =
         formatPeriod(rawPeriod);
-
 
     const date =
         formatDate(rawDate);
@@ -988,6 +913,9 @@ function generateInvoice() {
 
     /*
        Encode invoice data
+
+       encodeURIComponent makes the JSON
+       safe for btoa().
     */
 
     const encoded =
@@ -999,63 +927,58 @@ function generateInvoice() {
 
 
     /*
+       Create customer invoice URL.
+
        IMPORTANT:
+       Both files must be in the same folder:
 
-       This creates the link to
+       invoice-generator.html
        customer-invoice.html
-
-       It does NOT change your
-       customer-invoice.html file.
     */
 
     const customerLink =
         window.location.origin +
         window.location.pathname
-        .replace(
-            "invoice-generator.html",
-            "customer-invoice.html"
-        ) +
+            .replace(
+                "invoice-generator.html",
+                "customer-invoice.html"
+            ) +
         "#" +
         encoded;
 
 
     /*
-       Show standardized preview
+       Show preview
     */
 
     document
-    .getElementById("previewName")
-    .textContent =
+        .getElementById("previewName")
+        .textContent =
         name;
 
-
     document
-    .getElementById("previewInvoice")
-    .textContent =
+        .getElementById("previewInvoice")
+        .textContent =
         invoice;
 
-
     document
-    .getElementById("previewAmount")
-    .textContent =
+        .getElementById("previewAmount")
+        .textContent =
         formatAmount(amount);
 
-
     document
-    .getElementById("previewPeriod")
-    .textContent =
+        .getElementById("previewPeriod")
+        .textContent =
         period;
 
-
     document
-    .getElementById("previewDate")
-    .textContent =
+        .getElementById("previewDate")
+        .textContent =
         date;
 
-
     document
-    .getElementById("preview")
-    .style.display =
+        .getElementById("preview")
+        .style.display =
         "block";
 
 
@@ -1065,8 +988,8 @@ function generateInvoice() {
     */
 
     document
-    .getElementById("generatedLink")
-    .value =
+        .getElementById("generatedLink")
+        .value =
         customerLink;
 
 
@@ -1075,18 +998,18 @@ function generateInvoice() {
     */
 
     document
-    .getElementById("openInvoice")
-    .href =
+        .getElementById("openInvoice")
+        .href =
         customerLink;
 
 
     /*
-       Show result area
+       Show result
     */
 
     document
-    .getElementById("result")
-    .style.display =
+        .getElementById("result")
+        .style.display =
         "block";
 
 
@@ -1095,8 +1018,8 @@ function generateInvoice() {
     */
 
     document
-    .getElementById("success")
-    .style.display =
+        .getElementById("success")
+        .style.display =
         "none";
 
 }
@@ -1110,8 +1033,7 @@ function copyLink() {
 
     const link =
         document
-        .getElementById("generatedLink");
-
+            .getElementById("generatedLink");
 
     link.focus();
 
@@ -1122,17 +1044,14 @@ function copyLink() {
         link.value.length
     );
 
-
     try {
 
         document.execCommand("copy");
 
-
         document
-        .getElementById("success")
-        .style.display =
+            .getElementById("success")
+            .style.display =
             "block";
-
 
     } catch (error) {
 
@@ -1153,9 +1072,8 @@ function shortenLink() {
 
     const link =
         document
-        .getElementById("generatedLink")
-        .value;
-
+            .getElementById("generatedLink")
+            .value;
 
     if (!link) {
 
@@ -1174,8 +1092,7 @@ function shortenLink() {
 
     const input =
         document
-        .getElementById("generatedLink");
-
+            .getElementById("generatedLink");
 
     input.focus();
 
@@ -1186,12 +1103,13 @@ function shortenLink() {
         input.value.length
     );
 
-
     try {
 
         document.execCommand("copy");
 
     } catch (error) {
+
+        // Manual copy still possible
 
     }
 
@@ -1216,23 +1134,21 @@ function sendWhatsApp() {
 
     const link =
         document
-        .getElementById("generatedLink")
-        .value;
-
+            .getElementById("generatedLink")
+            .value;
 
     const name =
         document
-        .getElementById("customerName")
-        .value
-        .trim();
-
+            .getElementById("customerName")
+            .value
+            .trim();
 
     const invoice =
         document
-        .getElementById("invoiceNumber")
-        .value
-        .trim()
-        .toUpperCase();
+            .getElementById("invoiceNumber")
+            .value
+            .trim()
+            .toUpperCase();
 
 
     if (!link) {
@@ -1289,5 +1205,5 @@ function sendWhatsApp() {
 </script>
 
 </body>
-
 </html>
+```

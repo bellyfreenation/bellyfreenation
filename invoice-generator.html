@@ -94,8 +94,7 @@ label {
 
     font-weight: bold;
 
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 
     letter-spacing: 0.5px;
 }
@@ -120,8 +119,15 @@ input {
 
 input:focus {
 
-    border-color:
-        #174A35;
+    border-color: #174A35;
+}
+
+
+button {
+
+    font-family: inherit;
+
+    cursor: pointer;
 }
 
 
@@ -144,8 +150,6 @@ input:focus {
     font-size: 15px;
 
     font-weight: bold;
-
-    cursor: pointer;
 }
 
 
@@ -186,37 +190,46 @@ input:focus {
 
     background: #ffffff;
 
-    font-size: 13px;
+    font-size: 12px;
 
     margin-bottom: 10px;
 }
 
 
-.copy-button {
+.action-button {
 
     width: 100%;
 
     padding: 13px;
 
-    background: #174A35;
-
-    color: #ffffff;
-
-    border: none;
+    margin-top: 10px;
 
     border-radius: 8px;
 
     font-size: 14px;
 
     font-weight: bold;
-
-    cursor: pointer;
 }
 
 
-.copy-button:hover {
+.copy-button {
 
-    background: #0f3928;
+    background: #174A35;
+
+    color: #ffffff;
+
+    border: none;
+}
+
+
+.shorten-button {
+
+    background: #ffffff;
+
+    color: #174A35;
+
+    border:
+        1px solid #174A35;
 }
 
 
@@ -246,14 +259,16 @@ input:focus {
     text-align: center;
 
     text-decoration: none;
-
-    cursor: pointer;
 }
 
 
-.open-button:hover {
+.whatsapp-button {
 
-    background: #f3f5f1;
+    background: #25D366;
+
+    color: #ffffff;
+
+    border: none;
 }
 
 
@@ -298,7 +313,26 @@ input:focus {
 }
 
 
-/* MOBILE */
+.instructions {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: #fffaf0;
+
+    border:
+        1px solid #eee1c5;
+
+    border-radius: 8px;
+
+    color: #665a43;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
 
 @media (max-width: 600px) {
 
@@ -338,7 +372,7 @@ BELLY FREE NATION
 
 
 <div class="subtitle">
-Invoice Link Generator
+Invoice Generator
 </div>
 
 
@@ -364,7 +398,7 @@ Invoice Number
 <input
     type="text"
     id="invoiceNumber"
-    placeholder="e.g. BFN-003"
+    placeholder="e.g. BFN-112"
 >
 
 
@@ -390,7 +424,7 @@ Billing Period
 <input
     type="text"
     id="billingPeriod"
-    placeholder="e.g. Oct 1 - Oct 31, 2026"
+    placeholder="e.g. Oct 1 - Oct 10, 2026"
 >
 
 
@@ -407,7 +441,7 @@ Invoice Date
 >
 
 
-<!-- GENERATE BUTTON -->
+<!-- GENERATE -->
 
 <button
     class="generate-button"
@@ -499,14 +533,18 @@ Invoice Date
         readonly>
 
 
+    <!-- COPY -->
+
     <button
-        class="copy-button"
+        class="action-button copy-button"
         onclick="copyLink()">
 
         COPY LINK
 
     </button>
 
+
+    <!-- OPEN INVOICE -->
 
     <a
         href="#"
@@ -518,11 +556,58 @@ Invoice Date
     </a>
 
 
+    <!-- SHORTEN -->
+
+    <button
+        class="action-button shorten-button"
+        onclick="shortenLink()">
+
+        SHORTEN LINK WITH TINYURL
+
+    </button>
+
+
+    <!-- WHATSAPP -->
+
+    <button
+        class="action-button whatsapp-button"
+        onclick="sendWhatsApp()">
+
+        SEND ON WHATSAPP
+
+    </button>
+
+
     <div
         class="success"
         id="success">
 
         ✓ Link copied successfully!
+
+    </div>
+
+
+    <div class="instructions">
+
+        <strong>
+            To make a short link:
+        </strong>
+
+        <br>
+
+        Click "SHORTEN LINK WITH TINYURL".
+
+        <br>
+
+        Copy your invoice link from the box above.
+
+        <br>
+
+        Paste it into TinyURL and create your short link.
+
+        <br>
+
+        Then use the short link when sending to your customer.
 
     </div>
 
@@ -539,6 +624,7 @@ Invoice Date
 
 <script>
 
+
 /*
 ============================================================
 GENERATE INVOICE
@@ -547,10 +633,6 @@ GENERATE INVOICE
 
 function generateInvoice() {
 
-
-    /*
-    GET VALUES
-    */
 
     const name =
         document
@@ -638,7 +720,7 @@ function generateInvoice() {
 
 
     /*
-    ENCODE DATA
+    ENCODE
     */
 
     const encoded =
@@ -650,7 +732,7 @@ function generateInvoice() {
 
 
     /*
-    CREATE CUSTOMER LINK
+    CUSTOMER INVOICE LINK
     */
 
     const customerLink =
@@ -665,54 +747,42 @@ function generateInvoice() {
 
 
     /*
-    SHOW PREVIEW
+    PREVIEW
     */
 
     document
-    .getElementById(
-        "previewName"
-    )
+    .getElementById("previewName")
     .textContent =
         name;
 
 
     document
-    .getElementById(
-        "previewInvoice"
-    )
+    .getElementById("previewInvoice")
     .textContent =
         invoice;
 
 
     document
-    .getElementById(
-        "previewAmount"
-    )
+    .getElementById("previewAmount")
     .textContent =
         Number(amount)
         .toLocaleString("en-IN");
 
 
     document
-    .getElementById(
-        "previewPeriod"
-    )
+    .getElementById("previewPeriod")
     .textContent =
         period;
 
 
     document
-    .getElementById(
-        "previewDate"
-    )
+    .getElementById("previewDate")
     .textContent =
         date;
 
 
     document
-    .getElementById(
-        "preview"
-    )
+    .getElementById("preview")
     .style.display =
         "block";
 
@@ -722,42 +792,37 @@ function generateInvoice() {
     */
 
     document
-    .getElementById(
-        "generatedLink"
-    )
+    .getElementById("generatedLink")
     .value =
         customerLink;
 
 
-    document
-    .getElementById(
-        "result"
-    )
-    .style.display =
-        "block";
-
-
     /*
-    MAKE OPEN BUTTON
-    WORK
+    OPEN BUTTON
     */
 
     document
-    .getElementById(
-        "openInvoice"
-    )
+    .getElementById("openInvoice")
     .href =
         customerLink;
 
 
     /*
-    HIDE OLD SUCCESS MESSAGE
+    SHOW RESULT
     */
 
     document
-    .getElementById(
-        "success"
-    )
+    .getElementById("result")
+    .style.display =
+        "block";
+
+
+    /*
+    RESET SUCCESS
+    */
+
+    document
+    .getElementById("success")
     .style.display =
         "none";
 
@@ -775,9 +840,7 @@ function copyLink() {
 
     const link =
         document
-        .getElementById(
-            "generatedLink"
-        );
+        .getElementById("generatedLink");
 
 
     link.focus();
@@ -792,47 +855,173 @@ function copyLink() {
 
     try {
 
-
-        const successful =
-            document.execCommand(
-                "copy"
-            );
+        document.execCommand("copy");
 
 
-        if (successful) {
+        document
+        .getElementById("success")
+        .style.display =
+            "block";
 
 
-            document
-            .getElementById(
-                "success"
-            )
-            .style.display =
-                "block";
-
-
-        } else {
-
-
-            alert(
-                "Please copy the selected link manually."
-            );
-
-
-        }
-
-
-    }
-
-
-    catch (error) {
-
+    } catch (error) {
 
         alert(
             "Please copy the selected link manually."
         );
 
+    }
+
+}
+
+
+/*
+============================================================
+OPEN TINYURL
+============================================================
+*/
+
+function shortenLink() {
+
+
+    const link =
+        document
+        .getElementById("generatedLink")
+        .value;
+
+
+    if (!link) {
+
+        alert(
+            "Please generate an invoice first."
+        );
+
+        return;
 
     }
+
+
+    /*
+    Copy invoice link first
+    */
+
+    const input =
+        document
+        .getElementById("generatedLink");
+
+
+    input.focus();
+
+    input.select();
+
+    input.setSelectionRange(
+        0,
+        input.value.length
+    );
+
+
+    try {
+
+        document.execCommand("copy");
+
+    } catch (error) {
+
+    }
+
+
+    /*
+    Open TinyURL
+    */
+
+    window.open(
+        "https://tinyurl.com/",
+        "_blank"
+    );
+
+}
+
+
+/*
+============================================================
+WHATSAPP
+============================================================
+*/
+
+function sendWhatsApp() {
+
+
+    const link =
+        document
+        .getElementById("generatedLink")
+        .value;
+
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+
+    const invoice =
+        document
+        .getElementById("invoiceNumber")
+        .value
+        .trim();
+
+
+    if (!link) {
+
+        alert(
+            "Please generate an invoice first."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    WhatsApp message
+
+    NOTE:
+    This currently uses the invoice link.
+
+    After creating a TinyURL,
+    replace the long link with your
+    short link before sending.
+    */
+
+    const message =
+        "Hi " +
+        name +
+        ",\n\n" +
+
+        "Please find your Belly Free Nation invoice here:\n" +
+
+        link +
+
+        "\n\n" +
+
+        "Invoice: " +
+        invoice +
+
+        "\n\n" +
+
+        "Thank you!";
+
+
+    const whatsappURL =
+        "https://wa.me/?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
 
 }
 

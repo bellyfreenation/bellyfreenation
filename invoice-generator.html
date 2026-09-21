@@ -530,10 +530,147 @@ function formatMonth(month) {
 
 function formatDate(dateText) {
 
-    let text =
-        dateText
+    let text = dateText
         .trim()
-        .replace(/\s+/g, " ");
+        .replace(/\s+/g, " ")
+        .replace(/,/g, " , ");
+
+    text = text
+        .replace(/\s*,\s*/g, ", ")
+        .trim();
+
+
+    /*
+    MONTH + YEAR
+
+    Example:
+    oct 2022
+    OCT 2022
+    October 2022
+
+    Result:
+    Oct 2022
+    */
+
+    let monthYear =
+        text.match(
+            /^([A-Za-z]+)\s+(\d{4})$/i
+        );
+
+
+    if (monthYear) {
+
+        const month =
+            formatMonth(monthYear[1]);
+
+        const year =
+            monthYear[2];
+
+        return month + " " + year;
+
+    }
+
+
+    /*
+    MONTH + DAY + YEAR
+
+    Examples:
+    oct 1 2022
+    oct 1, 2022
+    October 1 2022
+
+    Result:
+    Oct 1, 2022
+    */
+
+    let fullDate =
+        text.match(
+            /^([A-Za-z]+)\s+(\d{1,2})(?:\s*,?\s*(\d{4}))?$/i
+        );
+
+
+    if (fullDate) {
+
+        const month =
+            formatMonth(fullDate[1]);
+
+        const day =
+            Number(fullDate[2]);
+
+        const year =
+            fullDate[3]
+            ? fullDate[3]
+            : "";
+
+
+        return (
+            month +
+            " " +
+            day +
+            (
+                year
+                ? ", " + year
+                : ""
+            )
+        );
+
+    }
+
+
+    /*
+    DAY + MONTH + YEAR
+
+    Example:
+    1 oct 2022
+
+    Result:
+    Oct 1, 2022
+    */
+
+    let dayMonthYear =
+        text.match(
+            /^(\d{1,2})\s+([A-Za-z]+)(?:\s*,?\s*(\d{4}))?$/i
+        );
+
+
+    if (dayMonthYear) {
+
+        const day =
+            Number(dayMonthYear[1]);
+
+        const month =
+            formatMonth(dayMonthYear[2]);
+
+        const year =
+            dayMonthYear[3]
+            ? dayMonthYear[3]
+            : "";
+
+
+        return (
+            month +
+            " " +
+            day +
+            (
+                year
+                ? ", " + year
+                : ""
+            )
+        );
+
+    }
+
+
+    /*
+    If nothing matches,
+    return cleaned text instead of
+    changing what the user entered.
+    */
+
+    return text;
+
+}
+
 
     text =
         text.replace(/\//g, "-");

@@ -5,8 +5,8 @@
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 >
 
 <title>Belly Free Nation | Invoice</title>
@@ -76,9 +76,7 @@ body {
     padding: 22px 28px 18px;
 
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
 
     border-bottom: 1px solid #e5e5e5;
@@ -266,7 +264,9 @@ body {
 .payment-area {
     display: grid;
 
-    grid-template-columns: 1fr 160px;
+    grid-template-columns:
+        1fr
+        160px;
 
     gap: 14px;
 
@@ -396,6 +396,8 @@ body {
     border: 1px solid #ddd;
 
     border-radius: 5px;
+
+    cursor: pointer;
 }
 
 .payment-note {
@@ -420,15 +422,19 @@ body {
 .closing-message {
     margin: 0;
 
-    color: #555;
+    color: #174A35;
 
     font-size: 9px;
 
-    line-height: 1.25;
+    line-height: 1.3;
+
+    font-weight: 700;
 }
 
 .closing-message strong {
     color: #174A35;
+
+    font-weight: 700;
 }
 
 
@@ -477,7 +483,7 @@ body {
 
 
 /* =====================================================
-   MOBILE — NO SCROLL
+   MOBILE — ONE SCREEN / NO SCROLL
 ===================================================== */
 
 @media (max-width: 600px) {
@@ -745,9 +751,13 @@ body {
     }
 
     .closing-message {
+        color: #174A35;
+
         font-size: 7px;
 
-        line-height: 1.15;
+        line-height: 1.25;
+
+        font-weight: 700;
     }
 
 
@@ -927,9 +937,7 @@ body {
     >
 
 
-        <!-- =========================
-             HEADER
-        ========================== -->
+        <!-- HEADER -->
 
         <div class="header">
 
@@ -962,16 +970,14 @@ body {
 
 
 
-        <!-- =========================
-             DETAILS
-        ========================== -->
+        <!-- DETAILS -->
 
         <div class="details">
 
             <div>
 
                 <div class="detail-title">
-                    Billed To
+                    Prepared For
                 </div>
 
                 <div
@@ -1019,14 +1025,12 @@ body {
 
 
 
-        <!-- =========================
-             SERVICE
-        ========================== -->
+        <!-- SERVICE -->
 
         <div class="service-section">
 
             <div class="service-title">
-                Service
+                Your BFN Plan
             </div>
 
             <div class="service-name">
@@ -1034,18 +1038,18 @@ body {
             </div>
 
             <div class="service-description">
-                Freshly prepared meals tailored to your plan.
+                Freshly prepared, personalized meals designed around your plan.
             </div>
 
 
             <div class="included-box">
 
                 <div class="included-title">
-                    Included With Your BFN Plan
+                    Your Plan Includes
                 </div>
 
                 <div class="included-items">
-                    Fresh preparation
+                    Fresh daily preparation
                     &nbsp;•&nbsp;
                     Personalized meals
                     &nbsp;•&nbsp;
@@ -1053,7 +1057,7 @@ body {
                 </div>
 
                 <div class="delivery-note">
-                    Delivery is included in your plan at no additional charge.
+                    Delivery is included at no additional charge.
                 </div>
 
             </div>
@@ -1062,9 +1066,7 @@ body {
 
 
 
-        <!-- =========================
-             PAYMENT AREA
-        ========================== -->
+        <!-- PAYMENT AREA -->
 
         <div class="payment-area">
 
@@ -1076,7 +1078,7 @@ body {
                 <div class="summary-row">
 
                     <span>
-                        Subtotal
+                        Plan Total
                     </span>
 
                     <span id="subtotal">
@@ -1107,7 +1109,7 @@ body {
             <div class="payment-box">
 
                 <h3>
-                    Payment
+                    MAKE YOUR PAYMENT
                 </h3>
 
                 <p>
@@ -1134,8 +1136,10 @@ body {
 
 
                 <p class="payment-note">
-                    Send payment screenshot to
-                    <strong>9391734732</strong>
+
+                    After payment, please share your payment screenshot
+                    with us at <strong>9391734732</strong>.
+
                 </p>
 
             </div>
@@ -1144,9 +1148,7 @@ body {
 
 
 
-        <!-- =========================
-             CLOSING
-        ========================== -->
+        <!-- CLOSING -->
 
         <div class="closing">
 
@@ -1156,7 +1158,11 @@ body {
                     Glad you’re taking a step toward a healthier, stronger you.
                 </strong>
 
-                &nbsp; KEEP GOING.
+                <br>
+
+                <strong>
+                    KEEP GOING.
+                </strong>
 
             </p>
 
@@ -1164,9 +1170,7 @@ body {
 
 
 
-        <!-- =========================
-             FOOTER
-        ========================== -->
+        <!-- FOOTER -->
 
         <div class="footer">
 
@@ -1190,7 +1194,6 @@ body {
 
 
 <script>
-
 
 /* =====================================================
    LOAD INVOICE

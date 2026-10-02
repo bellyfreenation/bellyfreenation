@@ -7,277 +7,73 @@
   <title>BFN Invoice Generator</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f5f1;
-      color: #252525;
-      padding: 5px;
-    }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f3f5f1; color: #252525; padding: 5px; }
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 9px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-      overflow: hidden;
-    }
+    .container { width: 100%; max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 9px; box-shadow: 0 5px 20px rgba(0,0,0,0.07); overflow: hidden; }
 
-    .header {
-      background: #174A35;
-      color: #ffffff;
-      padding: 10px 12px;
-      text-align: center;
-    }
+    .header { background: #174A35; color: #ffffff; padding: 10px 12px; text-align: center; }
+    .header h1 { font-size: 1rem; letter-spacing: .7px; }
 
-    .header h1 {
-      font-size: 1rem;
-      letter-spacing: .7px;
-    }
+    .content { padding: 10px 12px; }
 
-    .content {
-      padding: 10px 12px;
-    }
+    label { display: block; font-size: 0.74rem; font-weight: 600; margin-bottom: 3px; color: #333333; }
 
-    label {
-      display: block;
-      font-size: 0.74rem;
-      font-weight: 600;
-      margin-bottom: 3px;
-      color: #333333;
-    }
+    input[type="text"] { width: 100%; height: 36px; padding: 6px 9px; border: 1px solid #d1d5db; border-radius: 7px; font-size: 0.84rem; margin-bottom: 7px; }
+    input[type="text"]:focus { outline: none; border-color: #174A35; box-shadow: 0 0 0 2px rgba(23, 74, 53, 0.12); }
 
-    input[type="text"] {
-      width: 100%;
-      height: 36px;
-      padding: 6px 9px;
-      border: 1px solid #d1d5db;
-      border-radius: 7px;
-      font-size: 0.84rem;
-      margin-bottom: 7px;
-    }
+    select { width: 100%; height: 36px; padding: 6px 9px; border: 1px solid #d1d5db; border-radius: 7px; font-size: 0.84rem; margin-bottom: 7px; background: #ffffff; }
+    select:focus { outline: none; border-color: #174A35; box-shadow: 0 0 0 2px rgba(23, 74, 53, 0.12); }
 
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #174A35;
-      box-shadow: 0 0 0 2px rgba(23, 74, 53, 0.12);
-    }
+    #invoiceNumber { text-transform: uppercase; }
 
-    #invoiceNumber {
-      text-transform: uppercase;
-    }
+    .compact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 
-    .compact-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-    }
+    .generate-button { width: 100%; height: 38px; background: #174A35; color: #ffffff; border: none; padding: 8px; font-size: 0.82rem; font-weight: 600; border-radius: 7px; cursor: pointer; margin-top: 3px; }
+    .generate-button:hover { background: #0f3324; }
 
-    .generate-button {
-      width: 100%;
-      height: 38px;
-      background: #174A35;
-      color: #ffffff;
-      border: none;
-      padding: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      border-radius: 7px;
-      cursor: pointer;
-      margin-top: 3px;
-    }
+    .preview-box { background: #f6f8f5; border: 1px solid #e0e7df; border-radius: 7px; padding: 8px 10px; margin: 9px 0; font-size: 0.76rem; line-height: 1.45; display: none; }
+    .preview-box strong { display: block; margin-bottom: 5px; color: #174A35; }
 
-    .generate-button:hover {
-      background: #0f3324;
-    }
+    .result-section { display: none; margin-top: 8px; }
+    .result-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: #174A35; }
 
-    .preview-box {
-      background: #f6f8f5;
-      border: 1px solid #e0e7df;
-      border-radius: 7px;
-      padding: 8px 10px;
-      margin: 9px 0;
-      font-size: 0.76rem;
-      line-height: 1.45;
-      display: none;
-    }
+    .link-input { width: 100%; height: 42px; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 7px; font-size: 0.72rem; background: #f8fafc; margin-bottom: 7px; word-break: break-all; }
 
-    .preview-box strong {
-      display: block;
-      margin-bottom: 5px;
-      color: #174A35;
-    }
+    .action-button { width: 100%; height: 35px; padding: 7px; margin-bottom: 5px; border: none; border-radius: 7px; font-size: 0.76rem; font-weight: 600; cursor: pointer; }
 
-    .result-section {
-      display: none;
-      margin-top: 8px;
-    }
+    .copy-button { background: #10b981; color: white; }
+    .copy-button:hover { background: #059669; }
 
-    .result-title {
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin-bottom: 6px;
-      color: #174A35;
-    }
+    .open-button { display: block; text-align: center; background: #6366f1; color: white; text-decoration: none; padding: 9px; border-radius: 7px; font-size: 0.76rem; font-weight: 600; margin-bottom: 5px; }
+    .open-button:hover { background: #4f46e5; }
 
-    .link-input {
-      width: 100%;
-      height: 42px;
-      padding: 8px 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 7px;
-      font-size: 0.72rem;
-      background: #f8fafc;
-      margin-bottom: 7px;
-      word-break: break-all;
-    }
+    .shorten-button { background: #f59e0b; color: white; }
+    .shorten-button:hover { background: #d97706; }
 
-    .action-button {
-      width: 100%;
-      height: 35px;
-      padding: 7px;
-      margin-bottom: 5px;
-      border: none;
-      border-radius: 7px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
+    .whatsapp-button { background: #25d366; color: white; }
+    .whatsapp-button:hover { background: #1ebe5d; }
 
-    .copy-button {
-      background: #10b981;
-      color: white;
-    }
+    .success { display: none; background: #d1fae5; color: #065f46; padding: 8px; border-radius: 7px; text-align: center; font-size: 0.8rem; font-weight: 500; margin: 8px 0; }
 
-    .copy-button:hover {
-      background: #059669;
-    }
+    .error-message { display: none; background: #fee2e2; color: #991b1b; padding: 8px; border-radius: 7px; margin-top: 8px; font-size: 0.78rem; }
 
-    .open-button {
-      display: block;
-      text-align: center;
-      background: #6366f1;
-      color: white;
-      text-decoration: none;
-      padding: 9px;
-      border-radius: 7px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-
-    .open-button:hover {
-      background: #4f46e5;
-    }
-
-    .shorten-button {
-      background: #f59e0b;
-      color: white;
-    }
-
-    .shorten-button:hover {
-      background: #d97706;
-    }
-
-    .whatsapp-button {
-      background: #25d366;
-      color: white;
-    }
-
-    .whatsapp-button:hover {
-      background: #1ebe5d;
-    }
-
-    .success {
-      display: none;
-      background: #d1fae5;
-      color: #065f46;
-      padding: 8px;
-      border-radius: 7px;
-      text-align: center;
-      font-size: 0.8rem;
-      font-weight: 500;
-      margin: 8px 0;
-    }
-
-    .error-message {
-      display: none;
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 8px;
-      border-radius: 7px;
-      margin-top: 8px;
-      font-size: 0.78rem;
-    }
-
-    .instructions {
-      background: #f0f7f2;
-      border-left: 3px solid #174A35;
-      padding: 7px 8px;
-      border-radius: 0 6px 6px 0;
-      font-size: 0.68rem;
-      color: #174A35;
-      margin-top: 8px;
-      line-height: 1.3;
-    }
+    .instructions { background: #f0f7f2; border-left: 3px solid #174A35; padding: 7px 8px; border-radius: 0 6px 6px 0; font-size: 0.68rem; color: #174A35; margin-top: 8px; line-height: 1.3; }
 
     @media (min-width: 601px) {
-
-      body {
-        padding: 20px;
-      }
-
-      .header {
-        padding: 18px;
-      }
-
-      .header h1 {
-        font-size: 1.3rem;
-      }
-
-      .content {
-        padding: 20px;
-      }
-
-      label {
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-      }
-
-      input[type="text"] {
-        height: 42px;
-        font-size: 0.95rem;
-        margin-bottom: 12px;
-      }
-
-      .generate-button {
-        height: 44px;
-        font-size: 0.95rem;
-      }
-
-      .preview-box {
-        font-size: 0.9rem;
-      }
-
-      .action-button {
-        height: 40px;
-        font-size: 0.9rem;
-      }
-
-      .open-button {
-        font-size: 0.9rem;
-      }
-
-      .instructions {
-        font-size: 0.82rem;
-      }
+      body { padding: 20px; }
+      .header { padding: 18px; }
+      .header h1 { font-size: 1.3rem; }
+      .content { padding: 20px; }
+      label { font-size: 0.85rem; margin-bottom: 5px; }
+      input[type="text"] { height: 42px; font-size: 0.95rem; margin-bottom: 12px; }
+      select { height: 42px; font-size: 0.95rem; margin-bottom: 12px; }
+      .generate-button { height: 44px; font-size: 0.95rem; }
+      .preview-box { font-size: 0.9rem; }
+      .action-button { height: 40px; font-size: 0.9rem; }
+      .open-button { font-size: 0.9rem; }
+      .instructions { font-size: 0.82rem; }
     }
   </style>
 </head>
@@ -294,210 +90,107 @@
 
     <!-- CUSTOMER NAME -->
     <label for="customerName">Customer Name</label>
-
-    <input
-      type="text"
-      id="customerName"
-      placeholder="e.g. Sushma Reddy"
-    >
-
+    <input type="text" id="customerName" placeholder="e.g. Sushma Reddy">
 
     <!-- INVOICE NUMBER -->
     <label for="invoiceNumber">Invoice Number</label>
+    <input type="text" id="invoiceNumber" placeholder="e.g. BFN-112" oninput="formatInvoiceInput(this)">
 
-    <input
-      type="text"
-      id="invoiceNumber"
-      placeholder="e.g. BFN-112"
-      oninput="formatInvoiceInput(this)"
-    >
-
+    <!-- MEAL PLAN -->
+    <label for="mealPlan">Meal Plan</label>
+    <select id="mealPlan">
+      <option value="">Select a plan</option>
+      <option value="BELLYFREENATION LEAN">BELLYFREENATION LEAN — 350 kcal</option>
+      <option value="BELLYFREENATION BALANCE">BELLYFREENATION BALANCE — 500 kcal</option>
+      <option value="BELLYFREENATION PERFORM">BELLYFREENATION PERFORM — 650 kcal</option>
+      <option value="BELLYFREENATION FULL FUEL">BELLYFREENATION FULL FUEL — 800 kcal</option>
+    </select>
 
     <!-- AMOUNT + BILLING PERIOD -->
     <div class="compact-row">
-
       <div>
-
         <label for="amount">Amount (₹)</label>
-
-        <input
-          type="text"
-          id="amount"
-          placeholder="e.g. 5000"
-        >
-
+        <input type="text" id="amount" placeholder="e.g. 5000">
       </div>
-
-
       <div>
-
         <label for="billingPeriod">Billing Period</label>
-
-        <input
-          type="text"
-          id="billingPeriod"
-          placeholder="Oct 1 - Oct 10"
-        >
-
+        <input type="text" id="billingPeriod" placeholder="Oct 1 - Oct 10">
       </div>
-
     </div>
-
 
     <!-- INVOICE DATE -->
     <label for="invoiceDate">Invoice Date</label>
-
-    <input
-      type="text"
-      id="invoiceDate"
-      placeholder="e.g. Oct 1, 2026"
-    >
-
+    <input type="text" id="invoiceDate" placeholder="e.g. Oct 1, 2026">
 
     <!-- GENERATE BUTTON -->
-    <button
-      type="button"
-      class="generate-button"
-      onclick="generateInvoice()"
-    >
+    <button type="button" class="generate-button" onclick="generateInvoice()">
       GENERATE INVOICE LINK
     </button>
 
-
     <!-- ERROR -->
-    <div
-      class="error-message"
-      id="errorMessage"
-    ></div>
-
+    <div class="error-message" id="errorMessage"></div>
 
     <!-- PREVIEW -->
-    <div
-      class="preview-box"
-      id="previewBox"
-    >
+    <div class="preview-box" id="previewBox">
 
       <strong>Invoice Preview</strong>
 
-      Customer:
-      <span id="previewName"></span>
-
+      Customer: <span id="previewName"></span>
       <br>
-
-      Invoice:
-      <span id="previewInvoice"></span>
-
+      Invoice: <span id="previewInvoice"></span>
       <br>
-
-      Amount:
-      ₹<span id="previewAmount"></span>
-
+      Plan: <span id="previewPlan"></span>
       <br>
-
-      Period:
-      <span id="previewPeriod"></span>
-
+      Amount: ₹<span id="previewAmount"></span>
       <br>
-
-      Date:
-      <span id="previewDate"></span>
+      Period: <span id="previewPeriod"></span>
+      <br>
+      Date: <span id="previewDate"></span>
 
     </div>
 
-
     <!-- RESULT -->
-    <div
-      class="result-section"
-      id="resultSection"
-    >
+    <div class="result-section" id="resultSection">
 
-      <div class="result-title">
-        Customer Invoice Link
-      </div>
-
+      <div class="result-title">Customer Invoice Link</div>
 
       <!-- GENERATED LINK -->
-      <input
-        type="text"
-        id="generatedLink"
-        class="link-input"
-        readonly
-      >
-
+      <input type="text" id="generatedLink" class="link-input" readonly>
 
       <!-- COPY -->
-      <button
-        type="button"
-        class="action-button copy-button"
-        onclick="copyLink()"
-      >
+      <button type="button" class="action-button copy-button" onclick="copyLink()">
         COPY LINK
       </button>
 
-
       <!-- OPEN -->
-      <a
-        href="#"
-        id="openInvoice"
-        class="open-button"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href="#" id="openInvoice" class="open-button" target="_blank" rel="noopener noreferrer">
         OPEN INVOICE
       </a>
 
-
       <!-- TINYURL -->
-      <button
-        type="button"
-        class="action-button shorten-button"
-        onclick="shortenLink()"
-      >
+      <button type="button" class="action-button shorten-button" onclick="shortenLink()">
         SHORTEN LINK WITH TINYURL
       </button>
 
-
       <!-- WHATSAPP -->
-      <button
-        type="button"
-        class="action-button whatsapp-button"
-        onclick="sendWhatsApp()"
-      >
+      <button type="button" class="action-button whatsapp-button" onclick="sendWhatsApp()">
         SEND ON WHATSAPP
       </button>
 
-
       <!-- SUCCESS -->
-      <div
-        class="success"
-        id="success"
-      >
-        Link copied successfully!
-      </div>
-
+      <div class="success" id="success">Link copied successfully!</div>
 
       <!-- INSTRUCTIONS -->
       <div class="instructions">
-
         <strong>How to create a short link:</strong>
-
         <br>
-
-        1. Click
-        <strong>SHORTEN LINK WITH TINYURL</strong>.
-
+        1. Click <strong>SHORTEN LINK WITH TINYURL</strong>.
         <br>
-
         2. The invoice link will be copied automatically.
-
         <br>
-
         3. Paste it into TinyURL and create your short link.
-
         <br>
-
         4. Share the short link with your customer.
-
       </div>
 
     </div>
@@ -509,19 +202,14 @@
 
 <script>
 
-/* =========================================================
-   INVOICE PAGE
-   ========================================================= */
+/* INVOICE PAGE */
 
 const INVOICE_PAGE = "customer-invoice.html";
 
 
-/* =========================================================
-   FORMAT CUSTOMER NAME
-   ========================================================= */
+/* FORMAT CUSTOMER NAME */
 
 function formatName(value) {
-
   return value
     .trim()
     .replace(/\s+/g, " ")
@@ -529,46 +217,33 @@ function formatName(value) {
     .replace(/\b\w/g, function(letter) {
       return letter.toUpperCase();
     });
-
 }
 
 
-/* =========================================================
-   FORMAT INVOICE NUMBER
-   ========================================================= */
+/* FORMAT INVOICE NUMBER */
 
 function formatInvoiceNumber(value) {
-
   return value
     .trim()
     .toUpperCase()
     .replace(/\s*-\s*/g, "-")
     .replace(/\s+/g, "");
-
 }
 
 
-/* =========================================================
-   FORMAT INVOICE NUMBER WHILE TYPING
-   ========================================================= */
+/* FORMAT INVOICE NUMBER WHILE TYPING */
 
 function formatInvoiceInput(input) {
-
   let value = input.value;
-
   value = value
     .toUpperCase()
     .replace(/\s*-\s*/g, "-")
     .replace(/\s+/g, "");
-
   input.value = value;
-
 }
 
 
-/* =========================================================
-   FORMAT DATE
-   ========================================================= */
+/* FORMAT DATE */
 
 function formatDate(value) {
 
@@ -582,85 +257,41 @@ function formatDate(value) {
     .replace(/\s*,\s*/g, ", ")
     .replace(/\s*-\s*/g, " - ");
 
-
   const months = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december"
+    "january", "february", "march", "april", "may", "june",
+    "july", "august", "september", "october", "november", "december"
   ];
-
 
   months.forEach(function(month) {
 
-    const shortMonth =
-      month.substring(0, 3);
+    const shortMonth = month.substring(0, 3);
 
-
-    const fullRegex =
-      new RegExp(
-        "\\b" + month + "\\b",
-        "gi"
-      );
-
+    const fullRegex = new RegExp("\\b" + month + "\\b", "gi");
 
     text = text.replace(
       fullRegex,
-      month.charAt(0).toUpperCase() +
-      month.slice(1)
+      month.charAt(0).toUpperCase() + month.slice(1)
     );
 
-
-    const shortRegex =
-      new RegExp(
-        "\\b" + shortMonth + "\\b",
-        "gi"
-      );
-
+    const shortRegex = new RegExp("\\b" + shortMonth + "\\b", "gi");
 
     text = text.replace(
       shortRegex,
-      shortMonth.charAt(0).toUpperCase() +
-      shortMonth.slice(1)
+      shortMonth.charAt(0).toUpperCase() + shortMonth.slice(1)
     );
 
   });
 
-
-  text = text.replace(
-    /\s+,/g,
-    ","
-  );
-
-
-  text = text.replace(
-    /,\s*/g,
-    ", "
-  );
-
-
-  text = text.replace(
-    /\s*-\s*/g,
-    " - "
-  );
-
+  text = text.replace(/\s+,/g, ",");
+  text = text.replace(/,\s*/g, ", ");
+  text = text.replace(/\s*-\s*/g, " - ");
 
   return text.trim();
 
 }
 
 
-/* =========================================================
-   FORMAT BILLING PERIOD
-   ========================================================= */
+/* FORMAT BILLING PERIOD */
 
 function formatBillingPeriod(value) {
 
@@ -673,29 +304,14 @@ function formatBillingPeriod(value) {
     .replace(/\s+/g, " ")
     .toLowerCase();
 
+  text = text.replace(/\s*-\s*/g, " - ");
+  text = text.replace(/\s*,\s*/g, ", ");
 
-  text = text.replace(
-    /\s*-\s*/g,
-    " - "
-  );
-
-
-  text = text.replace(
-    /\s*,\s*/g,
-    ", "
-  );
-
-
-  text = text.replace(
-    /\b\w/g,
-    function(letter) {
-      return letter.toUpperCase();
-    }
-  );
-
+  text = text.replace(/\b\w/g, function(letter) {
+    return letter.toUpperCase();
+  });
 
   const monthMap = {
-
     January: "Jan",
     February: "Feb",
     March: "Mar",
@@ -708,519 +324,239 @@ function formatBillingPeriod(value) {
     October: "Oct",
     November: "Nov",
     December: "Dec"
-
   };
 
+  Object.keys(monthMap).forEach(function(month) {
+    const regex = new RegExp("\\b" + month + "\\b", "g");
+    text = text.replace(regex, monthMap[month]);
+  });
 
-  Object.keys(monthMap).forEach(
-    function(month) {
-
-      const regex =
-        new RegExp(
-          "\\b" + month + "\\b",
-          "g"
-        );
-
-
-      text = text.replace(
-        regex,
-        monthMap[month]
-      );
-
-    }
-  );
-
-
-  text = text.replace(
-    /\s+/g,
-    " "
-  );
-
-
-  text = text.replace(
-    /\s*-\s*/g,
-    " - "
-  );
-
-
-  text = text.replace(
-    /\s*,\s*/g,
-    ", "
-  );
-
+  text = text.replace(/\s+/g, " ");
+  text = text.replace(/\s*-\s*/g, " - ");
+  text = text.replace(/\s*,\s*/g, ", ");
 
   return text.trim();
 
 }
 
 
-/* =========================================================
-   GENERATE INVOICE
-   ========================================================= */
+/* GENERATE INVOICE */
 
 function generateInvoice() {
 
   try {
 
-    const rawName =
-      document.getElementById(
-        "customerName"
-      ).value;
+    const rawName = document.getElementById("customerName").value;
+    const rawInvoice = document.getElementById("invoiceNumber").value;
+    const rawAmount = document.getElementById("amount").value;
+    const rawPeriod = document.getElementById("billingPeriod").value;
+    const rawDate = document.getElementById("invoiceDate").value;
 
-
-    const rawInvoice =
-      document.getElementById(
-        "invoiceNumber"
-      ).value;
-
-
-    const rawAmount =
-      document.getElementById(
-        "amount"
-      ).value;
-
-
-    const rawPeriod =
-      document.getElementById(
-        "billingPeriod"
-      ).value;
-
-
-    const rawDate =
-      document.getElementById(
-        "invoiceDate"
-      ).value;
-
+    const planSelect = document.getElementById("mealPlan");
+    const plan = planSelect.value;
+    // Label includes kcal — shown only here in the generator, never sent to the customer
+    const planLabel = planSelect.options[planSelect.selectedIndex].text;
 
     if (
       !rawName.trim() ||
       !rawInvoice.trim() ||
-      !rawAmount.trim()
+      !rawAmount.trim() ||
+      !plan
     ) {
-
-      alert(
-        "Please fill at least Customer Name, Invoice Number and Amount."
-      );
-
+      alert("Please fill Customer Name, Invoice Number, Meal Plan and Amount.");
       return;
-
     }
 
+    const name = formatName(rawName);
+    const invoice = formatInvoiceNumber(rawInvoice);
+    const amount = rawAmount.trim();
+    const period = formatBillingPeriod(rawPeriod);
+    const date = formatDate(rawDate);
 
-    const name =
-      formatName(rawName);
+    document.getElementById("customerName").value = name;
+    document.getElementById("invoiceNumber").value = invoice;
+    document.getElementById("billingPeriod").value = period;
+    document.getElementById("invoiceDate").value = date;
 
+    document.getElementById("previewName").textContent = name;
+    document.getElementById("previewInvoice").textContent = invoice;
+    document.getElementById("previewPlan").textContent = planLabel;
+    document.getElementById("previewAmount").textContent = amount;
+    document.getElementById("previewPeriod").textContent = period || "—";
+    document.getElementById("previewDate").textContent = date || "—";
 
-    const invoice =
-      formatInvoiceNumber(rawInvoice);
+    document.getElementById("previewBox").style.display = "block";
 
-
-    const amount =
-      rawAmount.trim();
-
-
-    const period =
-      formatBillingPeriod(rawPeriod);
-
-
-    const date =
-      formatDate(rawDate);
-
-
-    document.getElementById(
-      "customerName"
-    ).value = name;
-
-
-    document.getElementById(
-      "invoiceNumber"
-    ).value = invoice;
-
-
-    document.getElementById(
-      "billingPeriod"
-    ).value = period;
-
-
-    document.getElementById(
-      "invoiceDate"
-    ).value = date;
-
-
-    document.getElementById(
-      "previewName"
-    ).textContent = name;
-
-
-    document.getElementById(
-      "previewInvoice"
-    ).textContent = invoice;
-
-
-    document.getElementById(
-      "previewAmount"
-    ).textContent = amount;
-
-
-    document.getElementById(
-      "previewPeriod"
-    ).textContent =
-      period || "—";
-
-
-    document.getElementById(
-      "previewDate"
-    ).textContent =
-      date || "—";
-
-
-    document.getElementById(
-      "previewBox"
-    ).style.display = "block";
-
-
+    // Plan name only (no kcal) goes into the customer link
     const invoiceData = {
-
       name: name,
-
       invoice: invoice,
-
+      plan: plan,
       amount: amount,
-
       period: period,
-
       date: date
-
     };
 
+    const json = JSON.stringify(invoiceData);
+    const hash = encodeURIComponent(json);
 
-    const json =
-      JSON.stringify(invoiceData);
+    const invoicePageUrl = new URL(INVOICE_PAGE, window.location.href).href;
 
+    const fullLink = invoicePageUrl + "#" + hash;
 
-    const hash =
-      encodeURIComponent(json);
+    document.getElementById("generatedLink").value = fullLink;
+    document.getElementById("openInvoice").href = fullLink;
+    document.getElementById("resultSection").style.display = "block";
+    document.getElementById("errorMessage").style.display = "none";
 
-
-    const invoicePageUrl =
-      new URL(
-        INVOICE_PAGE,
-        window.location.href
-      ).href;
-
-
-    const fullLink =
-      invoicePageUrl +
-      "#" +
-      hash;
-
-
-    document.getElementById(
-      "generatedLink"
-    ).value = fullLink;
-
-
-    document.getElementById(
-      "openInvoice"
-    ).href = fullLink;
-
-
-    document.getElementById(
-      "resultSection"
-    ).style.display = "block";
-
-
-    document.getElementById(
-      "errorMessage"
-    ).style.display = "none";
-
-
-    document.getElementById(
-      "resultSection"
-    ).scrollIntoView({
-
+    document.getElementById("resultSection").scrollIntoView({
       behavior: "smooth",
-
       block: "start"
-
     });
 
   }
 
   catch (error) {
 
-    console.error(
-      "Invoice generation error:",
-      error
-    );
+    console.error("Invoice generation error:", error);
 
-
-    const errorMessage =
-      document.getElementById(
-        "errorMessage"
-      );
-
+    const errorMessage = document.getElementById("errorMessage");
 
     errorMessage.textContent =
       "Something went wrong while generating the invoice link. Please refresh the page and try again.";
 
-
-    errorMessage.style.display =
-      "block";
+    errorMessage.style.display = "block";
 
   }
 
 }
 
 
-/* =========================================================
-   COPY LINK
-   ========================================================= */
+/* COPY LINK */
 
 function copyLink() {
 
-  const link =
-    document.getElementById(
-      "generatedLink"
-    ).value;
-
+  const link = document.getElementById("generatedLink").value;
 
   if (!link) {
-
-    alert(
-      "Please generate the invoice link first."
-    );
-
+    alert("Please generate the invoice link first.");
     return;
-
   }
 
-
-  if (
-    navigator.clipboard &&
-    window.isSecureContext
-  ) {
+  if (navigator.clipboard && window.isSecureContext) {
 
     navigator.clipboard
       .writeText(link)
       .then(function() {
-
-        showSuccess(
-          "Link copied successfully!"
-        );
-
+        showSuccess("Link copied successfully!");
       })
       .catch(function() {
-
         fallbackCopy();
-
       });
 
   }
 
   else {
-
     fallbackCopy();
-
   }
 
 }
 
 
-/* =========================================================
-   FALLBACK COPY
-   ========================================================= */
+/* FALLBACK COPY */
 
 function fallbackCopy() {
 
-  const input =
-    document.getElementById(
-      "generatedLink"
-    );
-
+  const input = document.getElementById("generatedLink");
 
   input.focus();
-
   input.select();
-
-  input.setSelectionRange(
-    0,
-    input.value.length
-  );
-
+  input.setSelectionRange(0, input.value.length);
 
   try {
-
-    document.execCommand(
-      "copy"
-    );
-
-
-    showSuccess(
-      "Link copied successfully!"
-    );
-
+    document.execCommand("copy");
+    showSuccess("Link copied successfully!");
   }
 
   catch (error) {
-
-    alert(
-      "Please select and copy the link manually."
-    );
-
+    alert("Please select and copy the link manually.");
   }
 
 }
 
 
-/* =========================================================
-   SUCCESS MESSAGE
-   ========================================================= */
+/* SUCCESS MESSAGE */
 
 function showSuccess(message) {
 
-  const success =
-    document.getElementById(
-      "success"
-    );
+  const success = document.getElementById("success");
 
+  success.textContent = message;
+  success.style.display = "block";
 
-  success.textContent =
-    message;
-
-
-  success.style.display =
-    "block";
-
-
-  setTimeout(
-    function() {
-
-      success.style.display =
-        "none";
-
-    },
-    2500
-  );
+  setTimeout(function() {
+    success.style.display = "none";
+  }, 2500);
 
 }
 
 
-/* =========================================================
-   SHORTEN LINK
-   ========================================================= */
+/* SHORTEN LINK */
 
 function shortenLink() {
 
-  const longUrl =
-    document.getElementById(
-      "generatedLink"
-    ).value;
-
+  const longUrl = document.getElementById("generatedLink").value;
 
   if (!longUrl) {
-
-    alert(
-      "Please generate the invoice link first."
-    );
-
+    alert("Please generate the invoice link first.");
     return;
-
   }
-
 
   function openTinyURL() {
-
-    window.open(
-      "https://tinyurl.com/app",
-      "_blank"
-    );
-
+    window.open("https://tinyurl.com/app", "_blank");
   }
 
-
-  if (
-    navigator.clipboard &&
-    window.isSecureContext
-  ) {
+  if (navigator.clipboard && window.isSecureContext) {
 
     navigator.clipboard
       .writeText(longUrl)
       .then(function() {
-
         openTinyURL();
-
         alert(
           "Invoice link copied!\n\n" +
           "Paste it into TinyURL and create your short link."
         );
-
       })
       .catch(function() {
-
         fallbackCopy();
-
         openTinyURL();
-
       });
 
   }
 
   else {
-
     fallbackCopy();
-
     openTinyURL();
-
   }
 
 }
 
 
-/* =========================================================
-   WHATSAPP
-   ========================================================= */
+/* WHATSAPP */
 
 function sendWhatsApp() {
 
-  const longUrl =
-    document.getElementById(
-      "generatedLink"
-    ).value;
-
+  const longUrl = document.getElementById("generatedLink").value;
 
   if (!longUrl) {
-
-    alert(
-      "Please generate the invoice link first."
-    );
-
+    alert("Please generate the invoice link first.");
     return;
-
   }
 
-
-  const name =
-    formatName(
-      document.getElementById(
-        "customerName"
-      ).value
-    );
-
-
-  const amount =
-    document.getElementById(
-      "amount"
-    ).value.trim();
-
-
-  const invoice =
-    formatInvoiceNumber(
-      document.getElementById(
-        "invoiceNumber"
-      ).value
-    );
-
+  const name = formatName(document.getElementById("customerName").value);
+  const amount = document.getElementById("amount").value.trim();
+  const invoice = formatInvoiceNumber(document.getElementById("invoiceNumber").value);
+  const plan = document.getElementById("mealPlan").value;
 
   const message =
 
@@ -1230,7 +566,9 @@ function sendWhatsApp() {
 
     "Here is your invoice (" +
     invoice +
-    ") for ₹" +
+    ") for " +
+    plan +
+    " – ₹" +
     amount +
     ":\n\n" +
 
@@ -1241,20 +579,9 @@ function sendWhatsApp() {
 
     "— Belly Free Nation";
 
+  const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
 
-  const whatsappUrl =
-
-    "https://wa.me/?text=" +
-
-    encodeURIComponent(
-      message
-    );
-
-
-  window.open(
-    whatsappUrl,
-    "_blank"
-  );
+  window.open(whatsappUrl, "_blank");
 
 }
 

@@ -16,7 +16,7 @@ body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #2
 /* HEADER */
 .header { padding: 22px 28px 18px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--cream); border-bottom: 3px solid var(--gold); }
 .tagline { margin-top: 10px; color: var(--green); font-family: Georgia, serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
-.logo-img { height: 84px; width: auto; display: block; }
+.logo-img { width: 340px; max-width: 80%; height: auto; display: block; }
 
 
 .inv-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 28px; background: var(--deep); color: var(--cream); }
@@ -59,6 +59,10 @@ body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #2
 .qr-wrapper { display: flex; justify-content: center; align-items: center; margin: 5px auto 3px; }
 .qr-wrapper a { display: block; line-height: 0; }
 .qr-code { display: block; width: 82px !important; height: 82px !important; object-fit: contain; border: 2px solid var(--gold); border-radius: 5px; background: #fff; cursor: pointer; }
+.upi-id-box { margin: 6px 0 2px; padding: 5px 6px; background: #fff; border: 1px dashed var(--gold); border-radius: 5px; }
+.upi-label { display: block; color: #5f7a62; font-size: 6.5px; letter-spacing: 1.5px; text-transform: uppercase; }
+.upi-id { display: block; margin: 2px 0 4px; color: var(--green); font-size: 9px; font-weight: 700; letter-spacing: .3px; word-break: break-all; user-select: all; -webkit-user-select: all; }
+.copy-btn { border: none; background: var(--green); color: var(--cream); font-size: 7px; font-weight: 700; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 4px; cursor: pointer; }
 .payment-note { margin-top: 3px !important; color: #555 !important; font-size: 7px !important; }
 
 /* CLOSING + FOOTER */
@@ -77,7 +81,7 @@ body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #2
     .page { padding: 0; align-items: flex-start; overflow: hidden; }
     .invoice { height: 100vh; height: 100dvh; max-width: none; border-radius: 0; box-shadow: none; display: flex; flex-direction: column; }
     .header { flex-shrink: 0; padding: 16px 16px 14px; }
-    .logo-img { height: 58px; }
+    .logo-img { width: 72%; max-width: 300px; }
     .inv-bar { padding: 10px 16px; }
     .bar-main { font-size: 10px; letter-spacing: .5px; }
     .bar-tag { margin-right: 5px; }
@@ -113,7 +117,7 @@ body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #2
 
 @media (max-width: 380px) and (max-height: 700px) {
     .header { padding: 10px 14px 9px; }
-    .logo-img { height: 46px; }
+    .logo-img { width: 58%; }
     .tagline { margin-top: 5px; font-size: 8px; }
     .details { padding: 9px 14px; }
     .service-name { font-size: 22px; }
@@ -194,11 +198,14 @@ body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #2
 
         <div class="payment-box">
             <h3>MAKE YOUR PAYMENT</h3>
-            <p>Scan QR to pay using any UPI app.</p>
+            <p>Scan the QR with any UPI app.</p>
             <div class="qr-wrapper">
-                <a href="qr-code.jpeg" download="Belly-Free-Nation-UPI-QR.jpg">
-                    <img src="qr-code.jpeg" alt="Belly Free Nation UPI Payment QR Code" class="qr-code">
-                </a>
+                <img src="qr-code.jpeg" alt="Belly Free Nation UPI Payment QR Code" class="qr-code">
+            </div>
+<div class="upi-id-box">
+                <span class="upi-label">Or pay to UPI ID</span>
+                <span class="upi-id" id="upi-id"></span>
+                <button type="button" class="copy-btn" id="copy-upi" onclick="copyUpi()">COPY</button>
             </div>
             <p class="payment-note">
                 After payment, please share your payment screenshot
@@ -223,6 +230,32 @@ body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #2
 </div>
 
 <script>
+
+/* UPI ID shown under the QR code */
+const UPI_ID = "6309075979-2@ybl";
+
+function copyUpi() {
+    const btn = document.getElementById("copy-upi");
+    function done() {
+        btn.textContent = "COPIED";
+        setTimeout(function() { btn.textContent = "COPY"; }, 2000);
+    }
+    function fallback() {
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById("upi-id"));
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try { document.execCommand("copy"); done(); } catch (e) {}
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(UPI_ID).then(done).catch(fallback);
+    } else {
+        fallback();
+    }
+}
+
+document.getElementById("upi-id").textContent = UPI_ID;
 
 function loadInvoice() {
 

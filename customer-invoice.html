@@ -5,265 +5,224 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Belly Free Nation | Invoice</title>
 <style>
-/* RESET */
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
-body { font-family: Arial, Helvetica, sans-serif; background: #f3f5f1; color: #252525; overflow: hidden; }
+body { font-family: Arial, Helvetica, sans-serif; background: #e9e5d8; color: #252525; overflow: hidden; }
+:root { --green: #0B3528; --deep: #0B3528; --gold: #66972B; --cream: #F7F3E8; --line: #e6e0cf; }
 
-/* PAGE */
 .page { width: 100%; height: 100vh; height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 12px; }
-.invoice { width: 100%; max-width: 760px; background: #ffffff; border-radius: 14px; box-shadow: 0 5px 25px rgba(0,0,0,0.08); overflow: hidden; }
+.invoice { width: 100%; max-width: 760px; background: #fff; border-radius: 14px; box-shadow: 0 12px 40px rgba(15,51,36,.18); overflow: hidden; }
 
 /* HEADER */
-.header { padding: 22px 28px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e5e5; }
-.brand h1 { margin: 0; color: #174A35; font-size: 25px; letter-spacing: 1px; font-weight: 700; }
-.brand p { margin: 4px 0 0; color: #777; font-size: 11px; }
-.invoice-label { text-align: right; }
-.invoice-label h2 { margin: 0; color: #333; font-size: 20px; letter-spacing: 1px; font-weight: 600; }
-.invoice-label p { margin: 3px 0 0; color: #777; font-size: 10px; }
+.header { padding: 22px 28px 18px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--cream); border-bottom: 3px solid var(--gold); }
+.tagline { margin-top: 10px; color: var(--green); font-family: Georgia, serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+.logo-img { height: 84px; width: auto; display: block; }
+
+
+.inv-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 28px; background: var(--deep); color: var(--cream); }
+.bar-main { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.bar-main:first-child { flex: 1; min-width: 0; }
+.bar-main:last-child { white-space: nowrap; }
+.bar-tag { margin-right: 8px; }
+.detail-value { text-transform: uppercase; }
+.period-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 12px 28px; border-bottom: 1px solid var(--line); }
+.period-row .right { text-align: right; }
 
 /* DETAILS */
-.details { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 14px; padding: 15px 28px; border-bottom: 1px solid #eeeeee; }
-.detail-title { margin-bottom: 3px; color: #888; font-size: 8px; text-transform: uppercase; letter-spacing: .8px; }
+.details { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 14px; padding: 14px 28px; border-bottom: 1px solid var(--line); }
+.detail-title { margin-bottom: 3px; color: #5f7a62; font-size: 8px; text-transform: uppercase; letter-spacing: 1.5px; }
 .detail-value { color: #252525; font-size: 12px; font-weight: 600; line-height: 1.2; }
 
-/* SERVICE */
-.service-section { padding: 14px 28px 4px; }
-.service-name { margin-bottom: 3px; color: #222; font-size: 15px; font-weight: 600; }
-.service-description { color: #666; font-size: 10px; line-height: 1.3; }
+/* PLAN */
+.service-section { padding: 20px 28px 8px; text-align: center; }
+.included-line { margin-top: 14px; color: #777; font-size: 10px; letter-spacing: .5px; }
+.plan-brand { color: #5f7a62; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; }
+.service-name { margin: 3px 0; color: var(--green); font-family: Georgia, serif; font-size: 26px; letter-spacing: 3px; font-weight: 400; }
+.service-description { color: #777; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; }
+.tiers { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 14px; }
+.tier { padding: 4px 10px; border: 1px solid var(--line); border-radius: 20px; color: #aaa; font-size: 7.5px; letter-spacing: 1.2px; font-weight: 600; }
+.tier.active { background: var(--green); border-color: var(--gold); color: var(--cream); }
 
-/* INCLUDED */
-.included-box { margin-top: 7px; padding: 7px 10px; background: #f6f8f5; border: 1px solid #e0e7df; border-radius: 7px; }
-.included-title { margin-bottom: 2px; color: #174A35; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: .7px; }
+.included-box { margin-top: 10px; padding: 7px 10px; background: #fbf8f0; border: 1px solid var(--line); border-radius: 7px; }
+.included-title { margin-bottom: 2px; color: var(--green); font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; }
 .included-items { color: #555; font-size: 9px; line-height: 1.3; }
-.delivery-note { margin-top: 2px; color: #174A35; font-size: 7.5px; font-weight: 600; }
+.delivery-note { margin-top: 2px; color: #5f7a62; font-size: 7.5px; font-weight: 600; letter-spacing: .5px; }
 
-/* PAYMENT + SUMMARY */
-.payment-area { display: grid; grid-template-columns: 1fr 160px; gap: 14px; align-items: center; margin: 11px 28px 9px; }
-.summary { width: 100%; padding: 9px 11px; background: #ffffff; border: 1px solid #e5e5e5; border-radius: 8px; }
+/* PAYMENT */
+.payment-area { display: grid; grid-template-columns: 1fr 160px; gap: 14px; align-items: center; margin: 14px 28px 12px; }
+.summary { padding: 9px 11px; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
 .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; color: #555; font-size: 10px; }
-.summary-total { margin-top: 4px; padding-top: 7px; border-top: 2px solid #174A35; color: #174A35; font-size: 16px; font-weight: bold; }
-
-/* PAYMENT BOX */
-.payment-box { padding: 9px 11px; background: #f5f8f4; border: 1px solid #dfe8df; border-radius: 8px; text-align: center; }
-.payment-box h3 { margin: 0 0 3px; color: #174A35; font-size: 12px; }
+.summary-total { margin-top: 4px; padding-top: 7px; border-top: 2px solid var(--gold); color: var(--green); font-family: Georgia, serif; font-size: 18px; font-weight: bold; }
+.payment-box { padding: 9px 11px; background: #fbf8f0; border: 1px solid var(--line); border-radius: 8px; text-align: center; }
+.payment-box h3 { margin: 0 0 3px; color: var(--green); font-size: 10px; letter-spacing: 2px; }
 .payment-box p { margin: 3px 0; color: #666; font-size: 8px; line-height: 1.25; }
-
-/* QR */
 .qr-wrapper { display: flex; justify-content: center; align-items: center; margin: 5px auto 3px; }
 .qr-wrapper a { display: block; line-height: 0; }
-.qr-code { display: block; width: 82px !important; height: 82px !important; min-width: 82px !important; min-height: 82px !important; max-width: 82px !important; max-height: 82px !important; object-fit: contain; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; }
+.qr-code { display: block; width: 82px !important; height: 82px !important; object-fit: contain; border: 2px solid var(--gold); border-radius: 5px; background: #fff; cursor: pointer; }
 .payment-note { margin-top: 3px !important; color: #555 !important; font-size: 7px !important; }
 
-/* CLOSING */
+/* CLOSING + FOOTER */
 .closing { padding: 2px 28px 8px; text-align: center; }
-.closing-message { margin: 0; color: #174A35; font-size: 9px; line-height: 1.3; font-weight: 700; }
-.closing-message strong { color: #174A35; font-weight: 700; }
+.closing-message { margin: 0; color: var(--green); font-family: Georgia, serif; font-style: italic; font-size: 10px; line-height: 1.4; }
+.closing-message strong { font-family: Arial, sans-serif; font-style: normal; font-size: 8px; letter-spacing: 3px; color: #5f7a62; }
+.footer { padding: 8px 20px 9px; background: var(--deep); color: var(--cream); font-size: 7px; letter-spacing: 1px; line-height: 1.3; text-align: center; text-transform: uppercase; }
 
-/* FOOTER */
-.footer { padding: 7px 20px 9px; border-top: 1px solid #eeeeee; color: #666; font-size: 7px; line-height: 1.3; text-align: center; }
-.footer strong { color: #174A35; font-size: 8px; }
-
-/* ERROR */
 .error { padding: 40px 20px; text-align: center; }
-.error h2 { color: #174A35; }
+.error h2 { color: var(--green); }
 .error p { color: #666; }
 
-/* MOBILE — ONE SCREEN / NO SCROLL */
+/* MOBILE — ONE SCREEN, ROOMIER SPACING */
 @media (max-width: 600px) {
-    body { background: #ffffff; overflow: hidden; }
-    .page { width: 100%; height: 100vh; height: 100dvh; padding: 0; display: flex; align-items: flex-start; justify-content: center; overflow: hidden; }
-    .invoice { width: 100%; height: 100vh; height: 100dvh; max-width: none; border-radius: 0; box-shadow: none; overflow: hidden; display: flex; flex-direction: column; }
-
-    .header { flex-shrink: 0; padding: 11px 14px 9px; min-height: 58px; }
-    .brand h1 { font-size: 17px; letter-spacing: .7px; }
-    .brand p { margin-top: 2px; font-size: 8px; }
-    .invoice-label h2 { font-size: 14px; letter-spacing: .8px; }
-    .invoice-label p { margin-top: 2px; font-size: 7px; }
-
-    .details { flex-shrink: 0; grid-template-columns: 1.2fr 1fr 1fr; gap: 7px; padding: 8px 14px; }
-    .detail-title { margin-bottom: 2px; font-size: 6px; letter-spacing: .5px; }
-    .detail-value { font-size: 9px; line-height: 1.15; }
-
-    .service-section { flex-shrink: 0; padding: 8px 14px 2px; }
-    .service-name { margin-bottom: 2px; font-size: 11px; }
-    .service-description { font-size: 7.5px; line-height: 1.2; }
-
-    .included-box { margin-top: 5px; padding: 5px 7px; border-radius: 5px; }
-    .included-title { margin-bottom: 1px; font-size: 6px; }
-    .included-items { font-size: 7px; line-height: 1.2; }
-    .delivery-note { margin-top: 1px; font-size: 6px; }
-
-    .payment-area { flex-shrink: 0; grid-template-columns: 1fr 145px; gap: 8px; margin: 7px 14px 5px; }
-
-    .summary { padding: 7px 8px; border-radius: 6px; }
-    .summary-row { padding: 2px 0; font-size: 8px; }
-    .summary-total { margin-top: 2px; padding-top: 5px; font-size: 12px; }
-
-    .payment-box { padding: 6px 7px; border-radius: 6px; }
-    .payment-box h3 { margin-bottom: 2px; font-size: 9px; }
-    .payment-box p { margin: 2px 0; font-size: 6.5px; line-height: 1.15; }
-
-    .qr-wrapper { margin: 3px auto 2px; }
-    .qr-code { width: 72px !important; height: 72px !important; min-width: 72px !important; min-height: 72px !important; max-width: 72px !important; max-height: 72px !important; border-radius: 4px; }
-    .payment-note { margin-top: 2px !important; font-size: 6px !important; }
-
-    .closing { flex-shrink: 0; padding: 1px 14px 5px; }
-    .closing-message { color: #174A35; font-size: 7px; line-height: 1.25; font-weight: 700; }
-
-    .footer { flex-shrink: 0; padding: 5px 12px 6px; font-size: 6px; line-height: 1.2; }
-    .footer strong { font-size: 7px; }
+    body { background: #fff; }
+    .page { padding: 0; align-items: flex-start; overflow: hidden; }
+    .invoice { height: 100vh; height: 100dvh; max-width: none; border-radius: 0; box-shadow: none; display: flex; flex-direction: column; }
+    .header { flex-shrink: 0; padding: 16px 16px 14px; }
+    .logo-img { height: 58px; }
+    .inv-bar { padding: 10px 16px; }
+    .bar-main { font-size: 10px; letter-spacing: .5px; }
+    .bar-tag { margin-right: 5px; }
+    .period-row { padding: 10px 16px; }
+    .tagline { margin-top: 7px; font-size: 9px; letter-spacing: 2.5px; }
+    .brand p { margin-top: 4px; font-size: 7px; letter-spacing: 1.5px; }
+    .invoice-label h2 { font-size: 11px; letter-spacing: 3px; }
+    .invoice-label p { font-size: 9px; }
+    .details { flex-shrink: 0; gap: 8px; padding: 14px 16px; }
+    .detail-title { font-size: 7px; letter-spacing: 1.2px; margin-bottom: 4px; }
+    .detail-value { font-size: 11px; }
+    .service-section { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 10px 16px; }
+    .plan-brand { font-size: 8px; letter-spacing: 3px; }
+    .service-name { font-size: 28px; letter-spacing: 3px; margin: 6px 0; }
+    .service-description { font-size: 8px; }
+    .tiers { gap: 4px; margin-top: 14px; }
+    .tier { padding: 5px 8px; font-size: 7px; letter-spacing: .8px; }
+    .included-line { margin-top: 14px; font-size: 8.5px; }
+    .payment-area { flex-shrink: 0; grid-template-columns: 1fr 150px; gap: 10px; margin: 8px 16px; }
+    .summary { padding: 10px; }
+    .summary-row { padding: 4px 0; font-size: 10px; }
+    .summary-total { padding-top: 8px; font-size: 16px; }
+    .payment-box { padding: 8px; }
+    .payment-box h3 { font-size: 9px; }
+    .payment-box p { font-size: 7.5px; }
+    .qr-code { width: 80px !important; height: 80px !important; }
+    .payment-note { font-size: 7px !important; }
+    .closing { flex-shrink: 0; padding: 8px 16px 12px; }
+    .closing-message { font-size: 10px; }
+    .closing-message strong { font-size: 7px; }
+    .footer { flex-shrink: 0; padding: 9px 12px; font-size: 6.5px; }
 }
 
-/* VERY SMALL PHONES */
 @media (max-width: 380px) and (max-height: 700px) {
-    .header { padding-top: 8px; padding-bottom: 7px; min-height: 48px; }
-    .brand h1 { font-size: 15px; }
-    .brand p { font-size: 7px; }
-    .invoice-label h2 { font-size: 12px; }
-    .details { padding-top: 6px; padding-bottom: 6px; }
-    .service-section { padding-top: 6px; }
-    .included-box { margin-top: 3px; padding: 4px 6px; }
-    .payment-area { margin-top: 5px; margin-bottom: 3px; }
-    .qr-code { width: 62px !important; height: 62px !important; min-width: 62px !important; min-height: 62px !important; max-width: 62px !important; max-height: 62px !important; }
-    .closing { padding-bottom: 3px; }
-    .footer { padding-top: 4px; padding-bottom: 4px; }
+    .header { padding: 10px 14px 9px; }
+    .logo-img { height: 46px; }
+    .tagline { margin-top: 5px; font-size: 8px; }
+    .details { padding: 9px 14px; }
+    .service-name { font-size: 22px; }
+    .tiers { margin-top: 8px; }
+    .included-line { margin-top: 8px; }
+    .payment-area { margin: 5px 14px; }
+    .qr-code { width: 66px !important; height: 66px !important; }
+    .closing { padding: 4px 14px 6px; }
+    .footer { padding: 6px 12px; }
 }
 
-/* LANDSCAPE PHONE */
 @media (max-width: 900px) and (orientation: landscape) {
     .page { padding: 0; }
-    .invoice { height: 100vh; overflow: hidden; }
+    .invoice { height: 100vh; }
     .header { padding: 7px 14px; }
     .details { padding: 6px 14px; }
-    .service-section { padding: 6px 14px 2px; }
-    .included-box { margin-top: 3px; padding: 4px 7px; }
-    .payment-area { margin-top: 4px; margin-bottom: 3px; }
-    .qr-code { width: 55px !important; height: 55px !important; min-width: 55px !important; min-height: 55px !important; max-width: 55px !important; max-height: 55px !important; }
+    .service-section { padding: 5px 14px 2px; }
+    .service-name { font-size: 14px; }
+    .tiers { margin-top: 3px; }
+    .included-box { margin-top: 3px; padding: 3px 7px; }
+    .payment-area { margin: 4px 14px 3px; }
+    .qr-code { width: 55px !important; height: 55px !important; }
     .closing { padding-bottom: 3px; }
-    .footer { padding-top: 3px; padding-bottom: 4px; }
+    .footer { padding: 3px 12px; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
-    <div class="invoice" id="invoice-container">
+<div class="invoice" id="invoice-container">
 
-        <!-- HEADER -->
-        <div class="header">
-            <div class="brand">
-                <h1>BELLY FREE NATION</h1>
-                <p>Burn The Fat. Keep The Life.</p>
+    <div class="header">
+        <img class="logo-img" src="logo.png" alt="Belly Free Nation">
+        <div class="tagline">Burn The Fat. Keep The Life.</div>
+    </div>
+    <div class="inv-bar">
+        <div class="bar-main"><span class="bar-tag">CLIENT NAME:</span><span id="client-name">—</span></div>
+        <div class="bar-main"><span class="bar-tag">INVOICE</span><span id="invoice-number">#</span></div>
+    </div>
+    <div class="period-row">
+        <div>
+            <div class="detail-title">Billing Period</div>
+            <div class="detail-value" id="billing-period">—</div>
+        </div>
+        <div class="right">
+            <div class="detail-title">Invoice Date</div>
+            <div class="detail-value" id="invoice-date">—</div>
+        </div>
+    </div>
+
+    <div class="service-section">
+        <div class="plan-brand">BELLYFREENATION</div>
+        <div class="service-name" id="plan-name">MEAL PLAN</div>
+        <div class="service-description">Personalized Nutrition Meal Plan</div>
+
+        <div class="tiers" id="tiers">
+            <span class="tier" data-tier="LEAN">LEAN</span>
+            <span class="tier" data-tier="BALANCE">BALANCE</span>
+            <span class="tier" data-tier="PERFORM">PERFORM</span>
+            <span class="tier" data-tier="FULL FUEL">FULL FUEL</span>
+        </div>
+
+        <div class="included-line">Fresh daily preparation &nbsp;•&nbsp; Personalized meals &nbsp;•&nbsp; Doorstep delivery included</div>
+    </div>
+
+    <div class="payment-area">
+        <div class="summary">
+            <div class="summary-row">
+                <span>Plan Total</span>
+                <span id="subtotal">₹0</span>
             </div>
-            <div class="invoice-label">
-                <h2>INVOICE</h2>
-                <p id="invoice-number">Invoice</p>
+            <div class="summary-row summary-total">
+                <span>Amount Due</span>
+                <span id="amount-due">₹0</span>
             </div>
         </div>
 
-        <!-- DETAILS -->
-        <div class="details">
-            <div>
-                <div class="detail-title">Prepared For</div>
-                <div class="detail-value" id="client-name">—</div>
+        <div class="payment-box">
+            <h3>MAKE YOUR PAYMENT</h3>
+            <p>Scan QR to pay using any UPI app.</p>
+            <div class="qr-wrapper">
+                <a href="qr-code.jpeg" download="Belly-Free-Nation-UPI-QR.jpg">
+                    <img src="qr-code.jpeg" alt="Belly Free Nation UPI Payment QR Code" class="qr-code">
+                </a>
             </div>
-            <div>
-                <div class="detail-title">Billing Period</div>
-                <div class="detail-value" id="billing-period">—</div>
-            </div>
-            <div>
-                <div class="detail-title">Invoice Date</div>
-                <div class="detail-value" id="invoice-date">—</div>
-            </div>
-        </div>
-
-        <!-- SERVICE -->
-        <div class="service-section">
-
-            <div class="service-name" id="plan-name">
-                Personalized Nutrition Meal Plan
-            </div>
-
-            <div class="service-description">
-                Personalized Nutrition Meal Plan
-            </div>
-
-            <div class="included-box">
-                <div class="included-title">Your Plan Includes</div>
-                <div class="included-items">
-                    Fresh daily preparation
-                    &nbsp;•&nbsp;
-                    Personalized meals
-                    &nbsp;•&nbsp;
-                    Doorstep delivery
-                </div>
-                <div class="delivery-note">
-                    Delivery is included at no additional charge.
-                </div>
-            </div>
-
-        </div>
-
-        <!-- PAYMENT AREA -->
-        <div class="payment-area">
-
-            <!-- SUMMARY -->
-            <div class="summary">
-                <div class="summary-row">
-                    <span>Plan Total</span>
-                    <span id="subtotal">₹0</span>
-                </div>
-                <div class="summary-row summary-total">
-                    <span>Amount Due</span>
-                    <span id="amount-due">₹0</span>
-                </div>
-            </div>
-
-            <!-- PAYMENT -->
-            <div class="payment-box">
-                <h3>MAKE YOUR PAYMENT</h3>
-                <p>Scan QR to pay using any UPI app.</p>
-
-                <div class="qr-wrapper">
-                    <a href="qr-code.jpeg" download="Belly-Free-Nation-UPI-QR.jpg">
-                        <img src="qr-code.jpeg" alt="Belly Free Nation UPI Payment QR Code" class="qr-code">
-                    </a>
-                </div>
-
-                <p class="payment-note">
-                    After payment, please share your payment screenshot
-                    with us at <strong>9391734732</strong>.
-                </p>
-            </div>
-
-        </div>
-
-        <!-- CLOSING -->
-        <div class="closing">
-            <p class="closing-message">
-                <strong>Glad you’re taking a step toward a healthier, stronger you.</strong>
-                <br>
-                <strong>KEEP GOING.</strong>
+            <p class="payment-note">
+                After payment, please share your payment screenshot
+                with us at <strong>9391734732</strong>.
             </p>
         </div>
-
-        <!-- FOOTER -->
-        <div class="footer">
-            <strong>Structured daily fuel for fat loss, energy &amp; recovery.</strong>
-            &nbsp;•&nbsp;
-            <strong>Real food. Clear results.</strong>
-        </div>
-
     </div>
+
+    <div class="closing">
+        <p class="closing-message">
+            Glad you’re taking a step toward a healthier, stronger you.
+            <br>
+            <strong>KEEP GOING.</strong>
+        </p>
+    </div>
+
+    <div class="footer">
+        Real food. Clear results.
+    </div>
+
+</div>
 </div>
 
 <script>
-
-/* =====================================================
-   LOAD INVOICE
-===================================================== */
 
 function loadInvoice() {
 
@@ -276,33 +235,28 @@ function loadInvoice() {
 
     try {
 
-        const json = decodeURIComponent(hash);
-        const invoice = JSON.parse(json);
+        const invoice = JSON.parse(decodeURIComponent(hash));
 
-        /* CUSTOMER */
         document.getElementById("client-name").textContent = invoice.name || "—";
-
-        /* INVOICE NUMBER */
-        document.getElementById("invoice-number").textContent = "Invoice #" + (invoice.invoice || "");
-
-        /* BILLING PERIOD */
+        document.getElementById("invoice-number").textContent = "#" + (invoice.invoice || "");
         document.getElementById("billing-period").textContent = invoice.period || "—";
-
-        /* DATE */
         document.getElementById("invoice-date").textContent = invoice.date || "—";
 
-        /* PLAN */
+        /* PLAN: "BELLYFREENATION FULL FUEL" -> big "FULL FUEL" + highlighted tier */
         if (invoice.plan) {
-            document.getElementById("plan-name").textContent = invoice.plan;
+            const tierName = invoice.plan.replace(/^BELLYFREENATION\s*/i, "").trim().toUpperCase();
+            document.getElementById("plan-name").textContent = tierName || invoice.plan;
+            document.querySelectorAll(".tier").forEach(function(el) {
+                if (el.dataset.tier === tierName) {
+                    el.classList.add("active");
+                }
+            });
         }
 
-        /* AMOUNT */
         const formattedAmount = "₹" + Number(invoice.amount || 0).toLocaleString("en-IN");
-
         document.getElementById("subtotal").textContent = formattedAmount;
         document.getElementById("amount-due").textContent = formattedAmount;
 
-        /* PAGE TITLE */
         document.title = "Belly Free Nation | Invoice " + (invoice.invoice || "");
 
     }
@@ -314,11 +268,6 @@ function loadInvoice() {
 
 }
 
-
-/* =====================================================
-   ERROR
-===================================================== */
-
 function showError() {
 
     document.getElementById("invoice-container").innerHTML = `
@@ -329,11 +278,6 @@ function showError() {
     `;
 
 }
-
-
-/* =====================================================
-   START
-===================================================== */
 
 loadInvoice();
 
